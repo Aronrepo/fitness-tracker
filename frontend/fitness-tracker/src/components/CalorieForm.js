@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
+    // const [foodItems, setFoodItems, calories] = useCaloryCounted([]);
     const [open, setOpen] = React.useState(false);
 
     const handleCaloriesChange = (event) => {
