@@ -10,7 +10,7 @@ export default function DailyBarchart({ listedMeals }) {
     }
 
     return (
-        <Box flex={1} p={{ xs: 0, md: 2 }}>
+        
             <BarChart
                 p={{ tickFontSize: 10, }}
                 
@@ -34,7 +34,7 @@ export default function DailyBarchart({ listedMeals }) {
                 width={500}
                 height={350}
             />
-        </Box>
+        
     );
 }
 

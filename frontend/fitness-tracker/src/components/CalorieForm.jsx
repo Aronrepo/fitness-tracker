@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Notification from './Notification';
-import { Box } from '@mui/material';
+import { Box, Grid, Item, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
 import DailyBarchart from './DailyBarchart';
-import { Add } from '@mui/icons-material';
+import SearchBar from './SearchBar';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import {
+    Add,
+    SignalCellularConnectedNoInternet0BarSharp,
+} from '@mui/icons-material';
 
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
@@ -38,8 +44,6 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
-    
-
     const fetchDailyCalories = () => {
         return fetch(`/analyze?duration=${duration}`, {
             method: 'GET',
@@ -48,8 +52,6 @@ const CalorieForm = () => {
             },
         }).then((res) => res.json());
     };
-
-    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -79,47 +81,75 @@ const CalorieForm = () => {
             console.error('Error posting calories:', error);
         }
     };
-
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
     return (
         <>
-            <Box  flex={5} p={{ xs: 0, md: 2, alignItems: 'center'}}>
-                <form className='calorie-form' onSubmit={handleSubmit}>
-                    <label htmlFor='calories'>Enter Calories:</label>
-                    <input
-                        type='number'
-                        id='calories'
-                        value={calories}
-                        onChange={handleCaloriesChange}
-                        className='calorie-input'
-                    />
+            <Box flex={5} p={{ xs: 0, md: 6 }}>
+                <Grid container spacing={2}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={7}>
+                            <Grid item xs={10}>
+                                <Typography>
+                                    <h5>Your Daily Summary</h5>
+                                </Typography>
+                            </Grid>
+                            <form
+                                className='calorie-form'
+                                onSubmit={handleSubmit}
+                            >
+                                <SearchBar />
+                                <label htmlFor='calories'>
+                                    Enter Calories:
+                                </label>
+                                <input
+                                    type='number'
+                                    id='calories'
+                                    value={calories}
+                                    onChange={handleCaloriesChange}
+                                    className='calorie-input'
+                                />
 
-                    <label htmlFor='foodType'>Enter food:</label>
+                                <label htmlFor='foodType'>Enter food:</label>
 
-                    <input
-                        type='text'
-                        id='foodType'
-                        value={foodType}
-                        onChange={handleFoodTypeChange}
-                        className='food-input'
-                    />
+                                <input
+                                    type='text'
+                                    id='foodType'
+                                    value={foodType}
+                                    onChange={handleFoodTypeChange}
+                                    className='food-input'
+                                />
 
-                    <Button
-                        variant='contained'
-                        type='submit'
-                        className='submit-button'
-                        onClick={handleClick}
-                    >
-                        Post Calories
-                    </Button>
+                                <Button
+                                    variant='contained'
+                                    type='submit'
+                                    className='submit-button'
+                                    onClick={handleClick}
+                                >
+                                    Post Calories
+                                </Button>
 
-                    <Notification
-                        open={open}
-                        onClose={handleClose}
-                        message='Posted a meal'
-                    />
-                </form>
+                                <Notification
+                                    open={open}
+                                    onClose={handleClose}
+                                    message='Posted a meal'
+                                />
+                            </form>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Grid item xs={4}>
+                                <Typography><h5>Daily Barchart</h5></Typography>
+                            </Grid>
+                            <DailyBarchart listedMeals={dailyCalorieInfos} />
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Box>
-            <DailyBarchart listedMeals={dailyCalorieInfos} />
         </>
     );
 };
