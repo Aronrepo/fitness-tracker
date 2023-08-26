@@ -9,7 +9,16 @@ import Sidebar from './components/Sidebar';
 import Rightbar from './components/Rightbar';
 
 import { Box, createTheme, Stack, ThemeProvider } from '@mui/material';
-
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+const lightTheme = createTheme({
+    palette: {
+        mode: 'light',
+    },
+});
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -24,15 +33,11 @@ const App = () => {
     };
     const [mode, setMode] = useState('light');
 
-    const darkTheme = createTheme({
-        palette: {
-            mode: mode,
-        },
-    });
+    
     return (
         
-            <ThemeProvider theme={darkTheme}>
-                <Box bgcolor={'background.default'} color={'text.primary'}>
+            <ThemeProvider theme={mode==='light'?lightTheme:darkTheme}>
+                <Box sx={{ height: '100vh' }} bgcolor={'background.default'} color={'text.primary'}>
                     <Navbar
                         isLoggedIn={isLoggedIn}
                         handleLogout={handleLogout}

@@ -22,11 +22,18 @@ const CalorieForm = () => {
             dailyCalorieConsumption: 0,
         },
     ]);
+
     const [duration, setDuration] = useState('daily');
+    const [selectedFood, setSelectedFood] = useState();
     const jwtToken = Cookies.get('jwtToken');
 
     const handleCaloriesChange = (event) => {
         setCalories(event.target.value);
+    };
+    const handleFoodChange = (foodObject) => {
+
+        console.log(foodObject);
+        setSelectedFood(foodObject.food_name)
     };
     const handleFoodTypeChange = (event) => {
         setFoodType(event.target.value);
@@ -81,13 +88,7 @@ const CalorieForm = () => {
             console.error('Error posting calories:', error);
         }
     };
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    }));
+    
     return (
         <>
             <Box  flex={5} p={{ xs: 0, md: 2, alignItems: 'center'}}>
@@ -100,9 +101,9 @@ const CalorieForm = () => {
                         onChange={handleCaloriesChange}
                         className='calorie-input'
                     />
-                    <SearchBar/>
-                    <label htmlFor='foodType'>Enter food:</label>
+                    <SearchBar onChange={handleFoodChange}/> 
 
+                    <label htmlFor='foodType'>Enter food:</label>
                     <input
                         type='text'
                         id='foodType'

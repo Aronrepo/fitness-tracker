@@ -21,7 +21,6 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
         <Box flex={2} p={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Box position='-webkit-sticky'>
                 <List>
-                    
                     {isLoggedIn && (
                         <List>
                             <ListItem disablePadding>
@@ -63,10 +62,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton
-                                    component='a'
-                                    href='analyze'
-                                >
+                                <ListItemButton component='a' href='analyze'>
                                     <ListItemIcon>
                                         <Settings />
                                     </ListItemIcon>
@@ -74,10 +70,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton
-                                    component='a'
-                                    href='profile'
-                                >
+                                <ListItemButton component='a' href='profile'>
                                     <ListItemIcon>
                                         <AccountBox />
                                     </ListItemIcon>
@@ -92,15 +85,18 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 <ModeNight />
                             </ListItemIcon>
                             <Switch
-                                onChange={(e) =>
-                                    setMode(mode === 'light' ? 'dark' : 'light')
+                                onChange={() =>
+                                    setMode((previousMode) =>
+                                        previousMode === 'light'
+                                            ? 'dark'
+                                            : 'light'
+                                    )
                                 }
                             />
                         </ListItemButton>
                     </ListItem>
                 </List>
             </Box>
-            
         </Box>
     );
 };

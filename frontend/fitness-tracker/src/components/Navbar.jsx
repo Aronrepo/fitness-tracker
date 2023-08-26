@@ -1,15 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link as LinkRouter} from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Cookies from 'js-cookie';
 import jwt from 'jwt-decode';
-import {
-    PlaylistAdd,
-    Article,
-    Home,
-    
-} from '@mui/icons-material';
+import { PlaylistAdd, Article, Home } from '@mui/icons-material';
 import {
     AppBar,
     Avatar,
@@ -17,6 +12,7 @@ import {
     styled,
     Toolbar,
     Typography,
+    Link,
 } from '@mui/material';
 import { useState } from 'react';
 import {
@@ -66,38 +62,26 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                     TrackFit
                 </Typography>
                 <PlaylistAdd sx={{ display: { xs: 'block', sm: 'none' } }} />
-                <ListItem
-                    disablePadding
-                    sx={{
-                        marginRight: 10,
-                        marginTop: 1,
-                        width: 60,
-                        height: 60,
-                    }}
+                <Link
+                    component='span'
+                    variant='button'
+                    color='text.primary'
+                    href='#'
                 >
-                    <ListItemButton component='a' href='/'>
-                        <ListItemIcon>
-                            <Home />
-                        </ListItemIcon>
-                        <ListItemText primary='Homepage' />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem
-                    disablePadding
-                    sx={{
-                        marginRight: 100,
-                        marginTop: 1,
-                        width: 60,
-                        height: 60,
-                    }}
+                    <LinkRouter to={'/'}>
+                        <Home />
+                    </LinkRouter>
+                </Link>
+                <Link
+                    component='span'
+                    variant='button'
+                    color='text.primary'
+                    href='#'
                 >
-                    <ListItemButton component='a' href='/about'>
-                        <ListItemIcon>
-                            <Article />
-                        </ListItemIcon>
-                        <ListItemText primary='About' />
-                    </ListItemButton>
-                </ListItem>
+                    <LinkRouter to={'/about'}>
+                        <Article />
+                    </LinkRouter>
+                </Link>
 
                 <div className='mb-2'>
                     {isLoggedIn ? (
