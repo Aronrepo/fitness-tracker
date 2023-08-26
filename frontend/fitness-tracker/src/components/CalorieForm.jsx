@@ -90,66 +90,44 @@ const CalorieForm = () => {
     }));
     return (
         <>
-            <Box flex={5} p={{ xs: 0, md: 6 }}>
-                <Grid container spacing={2}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={7}>
-                            <Grid item xs={10}>
-                                <Typography>
-                                    <h5>Your Daily Summary</h5>
-                                </Typography>
-                            </Grid>
-                            <form
-                                className='calorie-form'
-                                onSubmit={handleSubmit}
-                            >
-                                <SearchBar />
-                                <label htmlFor='calories'>
-                                    Enter Calories:
-                                </label>
-                                <input
-                                    type='number'
-                                    id='calories'
-                                    value={calories}
-                                    onChange={handleCaloriesChange}
-                                    className='calorie-input'
-                                />
+            <Box  flex={5} p={{ xs: 0, md: 2, alignItems: 'center'}}>
+                <form className='calorie-form' onSubmit={handleSubmit}>
+                    <label htmlFor='calories'>Enter Calories:</label>
+                    <input
+                        type='number'
+                        id='calories'
+                        value={calories}
+                        onChange={handleCaloriesChange}
+                        className='calorie-input'
+                    />
+                    <SearchBar/>
+                    <label htmlFor='foodType'>Enter food:</label>
 
-                                <label htmlFor='foodType'>Enter food:</label>
+                    <input
+                        type='text'
+                        id='foodType'
+                        value={foodType}
+                        onChange={handleFoodTypeChange}
+                        className='food-input'
+                    />
 
-                                <input
-                                    type='text'
-                                    id='foodType'
-                                    value={foodType}
-                                    onChange={handleFoodTypeChange}
-                                    className='food-input'
-                                />
+                    <Button
+                        variant='contained'
+                        type='submit'
+                        className='submit-button'
+                        onClick={handleClick}
+                    >
+                        Post Calories
+                    </Button>
 
-                                <Button
-                                    variant='contained'
-                                    type='submit'
-                                    className='submit-button'
-                                    onClick={handleClick}
-                                >
-                                    Post Calories
-                                </Button>
-
-                                <Notification
-                                    open={open}
-                                    onClose={handleClose}
-                                    message='Posted a meal'
-                                />
-                            </form>
-                        </Grid>
-                        <Grid item xs={7}>
-                            <Grid item xs={4}>
-                                <Typography><h5>Daily Barchart</h5></Typography>
-                            </Grid>
-                            <DailyBarchart listedMeals={dailyCalorieInfos} />
-                        </Grid>
-                    </Grid>
-                </Grid>
+                    <Notification
+                        open={open}
+                        onClose={handleClose}
+                        message='Posted a meal'
+                    />
+                </form>
             </Box>
+            <DailyBarchart listedMeals={dailyCalorieInfos} />
         </>
     );
 };
