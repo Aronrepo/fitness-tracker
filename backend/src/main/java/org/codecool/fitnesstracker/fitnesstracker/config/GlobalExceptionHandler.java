@@ -1,5 +1,6 @@
 package org.codecool.fitnesstracker.fitnesstracker.config;
 
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailAlreadyTakenException;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
 
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
@@ -25,5 +26,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<String> handleInvalidCredentialsException(InvalidCredentialsException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(EmailAlreadyTakenException.class)
+    public ResponseEntity<String> handleEmailAlreadyTakenException(EmailAlreadyTakenException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }
