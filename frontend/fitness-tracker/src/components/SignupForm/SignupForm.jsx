@@ -22,7 +22,20 @@ const createNewUser = (tempObj) => {
         },
         body: JSON.stringify(tempObj),
     }).then((res) => {                 console.log(tempObj);
-        res.json()});
+        if (!res.ok) {
+            if (res.status === 409) {
+                throw new Error('Email is used');
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        }
+        return res.json();
+    }).catch((error) => {
+        console.error('Sign up error', error);
+        throw error;
+        // You can handle the error here, such as showing a message to the user.
+        //throw error; // Re-throwing the error to propagate it further if needed.
+    });
 };
 
 const SignupForm = () => {
@@ -87,6 +100,7 @@ const SignupForm = () => {
 
         createNewUser(tempObj)
             .then((result) => {
+                console.log(result);
                 const emailAlreadyInUse = result === false;
                 if (emailAlreadyInUse) {
                     setSendButtonDisabled(false);
@@ -103,6 +117,13 @@ const SignupForm = () => {
                 }
             })
             .catch((err) => {
+                //setSnackbarOpen(true); 
+                //setSnackbarMessage(
+                     //err.message
+                //);
+                //setErrMsg(err)
+                //setSendButtonDisabled(false);
+                console.error('Login error', err);
             });
     };
 
