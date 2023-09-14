@@ -28,8 +28,8 @@ RUN mvn clean package
 FROM eclipse-temurin:17.0.8_7-jre
 
 ####copy jar from the first stage
-COPY  --from=backend-build ./target/trvbackend-1.0-SNAPSHOT.jar /app/
+COPY  --from=backend-build ./target/fitnesstracker-0.0.1-SNAPSHOT.jar /app/
 
 EXPOSE 8080
 
-CMD ["java","-jar","/app/trvbackend-1.0-SNAPSHOT.jar"]
+CMD ["java","-jar","/app/fitnesstracker-0.0.1-SNAPSHOT.jar"]
