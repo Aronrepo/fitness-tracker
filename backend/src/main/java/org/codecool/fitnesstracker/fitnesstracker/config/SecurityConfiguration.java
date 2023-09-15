@@ -29,7 +29,18 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/api/v1/auth/**")
+                                .requestMatchers(
+                                        "/",
+                                        "/about",
+                                        "/manifest.json",
+                                        "/favicon.ico",
+                                        "/logo192.png",
+                                        "/logo512.png",
+                                        "http://localhost:3000/static/media/aboutVideo.b4d390a94f17f55db39b.mp4",
+                                        "/api/v1/auth/**",
+                                        "/static/**",
+                                        "/templates/**",
+                                        "/index.html")
                                 .permitAll()
                                 .requestMatchers(POST,"/activities/").hasRole(Role.USER.name())
                                 .requestMatchers(GET,"/activities/").hasRole(Role.USER.name())

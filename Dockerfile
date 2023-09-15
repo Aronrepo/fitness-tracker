@@ -12,7 +12,7 @@ COPY ./frontend/fitness-tracker /react_build
 RUN npm run build
 
 
-#### Stage 1: Build the application
+#### Stage 2: Build the application
 FROM maven:3.8.7-openjdk-18-slim AS backend-build
 
 #### add pom.xml and source code
