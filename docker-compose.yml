@@ -25,7 +25,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -33,3 +33,6 @@ services:
 
 networks:
   backend-network:
+
+volumes:
+  db-data:

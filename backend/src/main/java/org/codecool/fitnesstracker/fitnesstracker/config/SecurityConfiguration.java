@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                         auth
                                 .requestMatchers(
                                         "/",
+                                        "/calorie",
                                         "/about",
                                         "/manifest.json",
                                         "/favicon.ico",
@@ -40,6 +41,11 @@ public class SecurityConfiguration {
                                         "/api/v1/auth/**",
                                         "/static/**",
                                         "/templates/**",
+                                        "/profile",
+                                        "/yourDailyCalorie",
+                                        "/yourDailyActivity",
+                                        "/analyze",
+                                        "/activity",
                                         "/index.html")
                                 .permitAll()
                                 .requestMatchers(POST,"/activities/").hasRole(Role.USER.name())
