@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                                         "/profile",
                                         "/yourDailyCalorie",
                                         "/yourDailyActivity",
-                                        "/analyze",
+                                        "/analyzeUser",
                                         "/activity",
                                         "/index.html")
                                 .permitAll()

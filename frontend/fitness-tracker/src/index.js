@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         element: <SignupForm />,
       },
       {
-        path: "/analyze",
+        path: "/analyzeUser",
         element: <Analyze />,
       },
       

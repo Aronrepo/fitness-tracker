@@ -16,7 +16,7 @@
 //     public String getAbout() {
 //         return "index";
 //     }
-@GetMapping({"/profile", "/calorie", "/activity", "/yourDailyCalorie", "/yourDailyActivity", "/analyze", "/about"})
+@GetMapping({"/profile", "/calorie", "/activity", "/yourDailyCalorie", "/yourDailyActivity", "/analyzeUser", "/about"})
 public String forward() {
     return "forward:/";
 }
