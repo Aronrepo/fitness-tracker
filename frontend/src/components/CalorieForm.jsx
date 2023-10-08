@@ -38,6 +38,11 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
+    useEffect(() => {
+        fetchDailyCalories().then((listedMeals) => {
+            setDailyCalorieInfos(listedMeals);
+        })
+    }, [])
     
 
     const fetchDailyCalories = () => {

@@ -1,0 +1,145 @@
+# -*- mode:org -*-
+#+OPTIONS: num:nil toc:nil ^:nil ':nil
+#+TITLE: Docker
+#+AUTHOR: Bence Fabian <bence.fabian@codecool.com>
+#+latex_header: \usepackage{parskip}
+#+latex_header: \usepackage{microtype}
+
+
+* Docker
+
+Docker is a [[https://en.wikipedia.org/wiki/Daemon_(computing)][daemon]] whith a CLI tool:
+
+#+begin_src sh
+  docker --version
+#+end_src
+
+#+RESULTS:
+| Docker version 20.10.23 | build v20.10.23 |
+
+
+It communicates with the service via a [[https://en.wikipedia.org/wiki/Unix_domain_socket][socket]]
+#+begin_src sh
+  ls -l /var/run/docker.sock
+#+end_src
+
+#+RESULTS:
+: srw-rw---- 1 root docker 0 Sep  1 09:04 /var/run/docker.sock
+
+To be able to send (write) messages we have to be part of the docker group.
+
+** Architecture
+
+*** Containers
+
+A running program (or service) /plus/ its environment:
+- Runtime environment (JRE, node, /etc./)
+  - Usually files on a file system
+- Network
+- Environment variables
+
+
+Let's start a container:
+
+#+begin_src sh :results verbatim
+  docker run hello-world
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+#+end_example
+
+
+#+begin_src sh
+  docker ps --all
+#+end_src
+
+#+RESULTS:
+| CONTAINER ID | IMAGE       | COMMAND | CREATED        | STATUS                        | PORTS | NAMES            |
+| 57c2787d66d1 | hello-world | /hello  | 18 seconds ago | Exited (0)     17 seconds ago |       | musing_blackwell |
+
+Names are auto-generated if not provided.
+
+There were no network ports opened to the external world
+
+It was /based/ on the =hello-world= image.
+
+*** Images
+
+#+begin_src sh
+  docker image ls hello-world
+#+end_src
+
+#+RESULTS:
+| REPOSITORY  | TAG    | IMAGE ID     | CREATED      | SIZE   |
+| hello-world | latest | 9c7a54a9a43c | 3 months ago | 13.3kB |
+
+Images are versioned and can be pushed and pulled to/from repositories.
+The "default" repository is [[https://hub.docker.com/][docker hub]].
+
+Images mostly contain a file system plus some metadata
+
+#+begin_src sh :results list
+  docker export 57c2787d66d1 | tar t
+#+end_src
+
+#+RESULTS:
+- .dockerenv
+- dev/
+- dev/console
+- dev/pts/
+- dev/shm/
+- etc/
+- etc/hostname
+- etc/hosts
+- etc/mtab
+- etc/resolv.conf
+- hello
+- proc/
+- sys/
+
+
+This is a very minimal linux system.
+
+Creating a whole linux FS is quite an undertaking.  So we want to build on others' work.
+
+#+begin_example
+  FROM ubuntu:23.04
+
+  COPY my_files /app
+#+end_example
+
+This is a *Dockerfile* which creates a /new/ image based on an existing ubuntu image.
+Containing our files for our project.
+
+This is almost useful:
+- We need a runtime
+- We need to specify where is our entrypoint
+
+
+We can use the *RUN* command to run arbitrary commands inside the image.
+For example: ~apt install nodejs~.
+
+And we can set the entrypoint with the *CMD* or the *ENTRYPOINT* directives.

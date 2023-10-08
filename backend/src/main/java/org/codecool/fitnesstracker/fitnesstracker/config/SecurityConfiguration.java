@@ -2,13 +2,14 @@ package org.codecool.fitnesstracker.fitnesstracker.config;
 
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.codecool.fitnesstracker.fitnesstracker.user.Authorities;
 import org.codecool.fitnesstracker.fitnesstracker.user.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,7 +27,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(
@@ -48,18 +49,17 @@ public class SecurityConfiguration {
                                         "/activity",
                                         "/index.html")
                                 .permitAll()
-                                .requestMatchers(POST,"/activities/").hasRole(Role.USER.name())
-                                .requestMatchers(GET,"/activities/").hasRole(Role.USER.name())
-                                .requestMatchers(POST,"/calories/").hasRole(Role.USER.name())
-                                .requestMatchers(GET,"/calories/").hasRole(Role.USER.name())
-                                .requestMatchers(GET,"/analyze/").hasRole(Role.USER.name())
-                                .requestMatchers(PUT,"/user/").hasRole(Role.USER.name())
+                                .requestMatchers(POST,"/activities/").hasAuthority(Authorities.SET_ACTIVITIES.name())
+                                .requestMatchers(GET,"/activities/").hasAuthority(Authorities.GET_ACTIVITIES.name())
+                                .requestMatchers(POST,"/calories/").hasAuthority(Authorities.SET_CALORIES.name())
+                                .requestMatchers(GET,"/calories/").hasAuthority(Authorities.GET_CALORIES.name())
+                                .requestMatchers(GET,"/analyze/").hasAuthority(Authorities.GET_ANALYZE.name())
+                                .requestMatchers(PUT,"/user/").hasAuthority(Authorities.CHANGE_USER.name())
                                 .anyRequest()
                                 .authenticated()
 
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

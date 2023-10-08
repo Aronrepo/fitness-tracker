@@ -89,7 +89,7 @@ const LoginForm = () => {
                     setTimeout(() => {
                         setSnackbarOpen(false);
                         setIsSuccessSnackbar(false);
-                        navigate('/');
+                        navigate('/profile');
                         window.location.reload();
                     }, 3000); 
                 

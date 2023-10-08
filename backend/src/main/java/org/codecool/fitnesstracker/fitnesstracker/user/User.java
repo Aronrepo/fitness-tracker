@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -46,7 +47,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
+        return role.getAuthorities().stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.name()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -78,8 +81,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)

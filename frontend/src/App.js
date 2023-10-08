@@ -32,7 +32,7 @@ const App = () => {
     return (
         
             <ThemeProvider theme={darkTheme}>
-                <Box bgcolor={'background.default'} color={'text.primary'}>
+                <Box sx={{ height: '100vh' }} bgcolor={'background.default'} color={'text.primary'}>
                     <Navbar
                         isLoggedIn={isLoggedIn}
                         handleLogout={handleLogout}

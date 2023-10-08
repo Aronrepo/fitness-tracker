@@ -38,9 +38,6 @@ public class ActivityController {
         activityService.addNewActivity(activity, authentication.getName());
         return new ResponseEntity<>(activity, HttpStatus.CREATED);
     }
-    @GetMapping
-    public ResponseEntity<String> sayHello(){
-        return ResponseEntity.ok("Hello from secured endpoint");
-    }
+
 
 }

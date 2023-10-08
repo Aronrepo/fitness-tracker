@@ -1,15 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as LinkRouter } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Cookies from 'js-cookie';
 import jwt from 'jwt-decode';
-import {
-    PlaylistAdd,
-    Article,
-    Home,
-    
-} from '@mui/icons-material';
+import { PlaylistAdd, Article, Home } from '@mui/icons-material';
 import {
     AppBar,
     Avatar,
@@ -17,6 +12,7 @@ import {
     styled,
     Toolbar,
     Typography,
+    Link,
 } from '@mui/material';
 import { useState } from 'react';
 import {
@@ -75,7 +71,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                         height: 60,
                     }}
                 >
-                    <ListItemButton component='a' href='/'>
+                    <ListItemButton component={LinkRouter} to='/'>
                         <ListItemIcon>
                             <Home />
                         </ListItemIcon>
@@ -91,7 +87,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                         height: 60,
                     }}
                 >
-                    <ListItemButton component='a' href='/about'>
+                    <ListItemButton component={LinkRouter} to='/about'>
                         <ListItemIcon>
                             <Article />
                         </ListItemIcon>
@@ -111,13 +107,16 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                                 <DropdownButton
                                     id={`dropdown-button-profile`}
                                     variant='primary'
-                                    title={jwt(Cookies.get('jwtToken')).email}
+                                    title={jwt(Cookies.get('jwtToken')).sub}
                                 >
-                                    <Dropdown.Item as={Link} to='/profile'>
+                                    <Dropdown.Item
+                                        as={LinkRouter}
+                                        to='/profile'
+                                    >
                                         Profile
                                     </Dropdown.Item>
                                     <Dropdown.Item
-                                        as={Link}
+                                        as={LinkRouter}
                                         to='/'
                                         onClick={handleLogout}
                                     >
@@ -132,10 +131,10 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                             variant='primary'
                             title={` Log In  `}
                         >
-                            <Dropdown.Item as={Link} to='/login'>
+                            <Dropdown.Item as={LinkRouter} to='/login'>
                                 Log in
                             </Dropdown.Item>
-                            <Dropdown.Item as={Link} to='/signup'>
+                            <Dropdown.Item as={LinkRouter} to='/signup'>
                                 Sign up
                             </Dropdown.Item>
                         </DropdownButton>

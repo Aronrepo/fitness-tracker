@@ -1,14 +1,9 @@
 package org.codecool.fitnesstracker.fitnesstracker.controller;
 
-import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserInfoDTO;
-import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.codecool.fitnesstracker.fitnesstracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +29,7 @@ public class UserController {
     @PutMapping()
     public void getUserInfo(@CurrentSecurityContext(expression = "authentication") Authentication authentication,
                             @RequestBody UserInfoDTO userInfo
-                           )  {
+    ) {
         userService.addUserInfo(userInfo, authentication.getName());
     }
 }

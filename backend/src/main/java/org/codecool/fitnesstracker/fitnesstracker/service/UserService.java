@@ -27,59 +27,20 @@ import java.util.Optional;
 public class UserService {
 
     UserRepository userRepository;
-    private final AuthenticationService authenticationService;
 
     @Autowired
-    public UserService(UserRepository userRepository, AuthenticationService authenticationService) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.authenticationService = authenticationService;
     }
 
     List<UserDTO> users = new ArrayList<>();
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-    @Value("${jwt.expiration}")
-    private int jwtExpiration;
+//    @Value("${jwt.secret}")
+//    private String jwtSecret;
+//    @Value("${jwt.expiration}")
+//    private int jwtExpiration;
 
     public List<UserDTO> getAllUsers() {
         return users;
-    }
-
-    public boolean addNewUser(NewUserDTO newUser) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        Optional<User> optionalUser = userRepository.findByEmail(newUser.email());
-        if(optionalUser.isPresent()) {
-            return false;
-        }
-        userRepository.save(new User(newUser.userName(), newUser.email(), newUser.password(), localDateTime));
-        return true;
-    }
-
-    public String generateJwtToken(String email) {
-        LocalDateTime now = LocalDateTime.now();
-        Date issuedAt = java.sql.Timestamp.valueOf(now);
-        Date expiration = java.sql.Timestamp.valueOf(now.plusMinutes(jwtExpiration));
-
-        return Jwts.builder()
-                .setSubject(email)
-                .claim("email", email)
-                .setIssuedAt(issuedAt)
-                .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();
-    }
-
-    public UserDTO authenticateUser(String email, String password) {
-        Optional<User> optionalUser = userRepository.findUserByEmailAndPassword(email, password);
-        if(optionalUser.isEmpty()) {
-            throw new InvalidCredentialsException("Invalid credentials");
-        }
-
-        return new UserDTO(optionalUser.get().getUsername(), optionalUser.get().getEmail(), optionalUser.get().getPassword(), optionalUser.get().getRegistrationTime());
-    }
-    public String getEmailFromJwtToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-        return claims.getSubject();
     }
 
     public User findUserByEmail(String userEmail) {

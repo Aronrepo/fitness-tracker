@@ -1,6 +1,7 @@
 package org.codecool.fitnesstracker.fitnesstracker.config;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -24,7 +25,13 @@ public class JwtService {
     //private static final String SECRET_KEY = "8851d39925d212493f548252ee44a6b8974cb814c82147356ff25dc686f44de4";
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        String userName;
+        try {
+            userName = extractClaim(token, Claims::getSubject);
+        } catch (ExpiredJwtException e) {
+            return null;
+        }
+        return userName;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -45,7 +52,12 @@ public class JwtService {
         return Jwts.builder().setClaims(extractClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)).signWith(getSignInKey(), SignatureAlgorithm.HS512).compact();
     }
     public  boolean isTokenValid(String  token, UserDetails userDetails){
-        final String username= extractUsername(token);
+        String username = null;
+        try {
+            username= extractUsername(token);
+        } catch (ExpiredJwtException e) {
+            return false;
+        }
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
