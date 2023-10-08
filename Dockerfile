@@ -3,12 +3,12 @@ FROM node as frontend-build
 
 WORKDIR /react_build
 ####Copy the main application
-COPY ./frontend/fitness-tracker/package*.json /react_build
+COPY ./frontend/package*.json /react_build
 
 RUN npm install
 
 RUN rm -rf public/images
-COPY ./frontend/fitness-tracker /react_build
+COPY ./frontend /react_build
 RUN npm run build
 
 
