@@ -14,40 +14,46 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^([a-z])/;
 const REGISTER_URL = '/register';
 
-const createNewUser = (tempObj) => {
-    return fetch('/api/v1/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(tempObj),
-    }).then((res) => {                 console.log(tempObj);
-        res.json()});
-};
 
 const SignupForm = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const userRef = useRef();
     const errRef = useRef();
-
+    
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
-
+    
     const [email, setEmail] = useState('');
-
+    
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
-
+    
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
-
+    
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
     const [sendButtonDisabled, setSendButtonDisabled] = useState(false);
+    
+    const createNewUser = (tempObj) => {
+        return fetch('/api/v1/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(tempObj),
+        }).then((res) => {
+            if(!res.ok) {
+                setSendButtonDisabled(false);
+                setErrMsg('This email address has already taken!');
+                throw new Error('This email address has already taken!');
+            }                 
+            res.json()});
+    };
 
     useEffect(() => {
         userRef.current.focus();
@@ -87,20 +93,18 @@ const SignupForm = () => {
 
         createNewUser(tempObj)
             .then((result) => {
-                const emailAlreadyInUse = result === false;
-                if (emailAlreadyInUse) {
-                    setSendButtonDisabled(false);
-                    setErrMsg('This email address has already taken!');
-                } else {
-                    setSuccess(true);
-                    
-                    setUser('');
-                    setPwd('');
-                    setMatchPwd('');
-                    setTimeout(() => {
-                        navigate('/login');
-                    }, 2000);
-                }
+            setSendButtonDisabled(false);
+            setErrMsg('This email address has already taken!');
+        
+            setSuccess(true);
+            
+            setUser('');
+            setPwd('');
+            setMatchPwd('');
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
+                
             })
             .catch((err) => {
             });
