@@ -11,6 +11,7 @@ export default function DailyBarchart({ listedMeals }) {
 
     return (
         <Box flex={1} p={{ xs: 0, md: 2 }}>
+            <h5>Daily Calorie Balance</h5>
             <BarChart
                 p={{ tickFontSize: 10, }}
                 
