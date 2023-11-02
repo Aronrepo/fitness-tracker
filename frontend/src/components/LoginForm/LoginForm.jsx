@@ -42,8 +42,8 @@ const loginAUTH = (userEmail, userPassword) => {
         }),
     }).then((response) => {
         if (!response.ok) {
-            if (response.status === 401) {
-                throw new Error('Invalid credentials');
+            if (response.status === 403) {
+                throw new Error('Wrong username or password');
             } else {
                 throw new Error('Network response was not ok');
             }
