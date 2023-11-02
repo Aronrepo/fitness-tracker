@@ -43,6 +43,9 @@ public class AnalyzeService {
     }
 
     private int getUserBaseLineCalorieRequirement(User user) {
+        if (user.getHeight() == 0) {
+            return 0;
+        }
         int age = Period.between(user.getBirthDate(), LocalDate.now()).getYears();
         if (user.getGender().equals("Woman")) {
             return (int) Math.round(655 + (9.6 * user.getWeight()) + (1.8 * user.getHeight()) - (4.7 * age));
