@@ -28,7 +28,7 @@ public class AnalyzeService {
         this.calorieService = calorieService;
         this.userService = userService;
         durations = new HashSet<>();
-        durations.add(new DailyAnalytics());
+        durations.add(new DailyAnalytics(calorieService, activityService));
     }
 
     public List<AnalyticDailyDTO> listAnalyticForPeriod(String duration, String userEmail){
@@ -39,7 +39,7 @@ public class AnalyzeService {
                 .equals(duration))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(duration))
-                .getAnalytics(calorieService, userBaseLineCalorieRequirement, user);
+                .getAnalytics(userBaseLineCalorieRequirement, user);
     }
 
     private int getUserBaseLineCalorieRequirement(User user) {
