@@ -20,7 +20,7 @@ public class WeeklyAnalytics implements AnalyticDuration {
     }
 
     @Override
-    public List<AnalyticDailyDTO> getAnalytics(CalorieService calorieService, int userBaseLineCalorieRequirement, User user) {
+    public List<AnalyticDailyDTO> getAnalytics(int userBaseLineCalorieRequirement, User user) {
         return null;
     }
 }
