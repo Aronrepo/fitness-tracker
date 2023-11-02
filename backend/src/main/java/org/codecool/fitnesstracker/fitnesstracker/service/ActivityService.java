@@ -1,5 +1,6 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityCalorieForAnalyticsDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
@@ -9,7 +10,9 @@ import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +43,15 @@ public class ActivityService {
         ActivityDTO addedActivity = new ActivityDTO(activity.activity(), activity.calories(), localDateTime);
         Activity newActivity = new Activity(addedActivity.activity(), addedActivity.calories(), localDateTime, user);
         activityRepository.save(newActivity);
+    }
+
+    public List<ActivityCalorieForAnalyticsDTO> getActivityFromDate(LocalDate startingDate, User user) {
+        LocalTime startTime = LocalTime.MIDNIGHT;
+        LocalDateTime startOfDay = LocalDateTime.of(startingDate, startTime);
+        List<Activity> activities = activityRepository.findByUserAndActivityDateTimeAfter(user, startOfDay);
+
+        return activities.stream()
+                .map(activity -> new ActivityCalorieForAnalyticsDTO(activity.getCalories(), activity.getActivityDateTime()))
+                .toList();
     }
 }
