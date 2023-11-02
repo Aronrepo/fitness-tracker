@@ -12,5 +12,5 @@ public interface AnalyticDuration {
 
     LocalDate getStartingDate();
 
-    List<AnalyticDailyDTO> getAnalytics(CalorieService calorieService, int userBaseLineCalorieRequirement, User user);
+    List<AnalyticDailyDTO> getAnalytics(int userBaseLineCalorieRequirement, User user);
 }
