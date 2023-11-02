@@ -63,7 +63,7 @@ public class CalorieService {
         List<Calorie> calories = calorieRepository.findByUserAndMealDateTimeAfter(user, startOfDay);
 
         return calories.stream()
-                .map(calorie -> new CalorieForAnalyticsDTO(calorie.getConsumption(), calorie.getMealDateTime()))
+                .map(calorie -> new CalorieForAnalyticsDTO(calorie.getConsumption() * calorie.getFoodType().getCalories()/100, calorie.getMealDateTime()))
                 .toList();
     }
 
