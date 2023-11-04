@@ -69,7 +69,19 @@ const CalorieForm = () => {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
-    }).then((res) => res.json());
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Could not fetch the data for that resource");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const showDailyBarChart = () => {
@@ -86,15 +98,27 @@ const CalorieForm = () => {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
-    }).then((res) => res.json());
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Could not fetch the data for that resource");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
   };
 
   const handleSearchClick = () => {
     fetchFoodType().then((listedFoodTypes) => {
-      setIsSearched(true);
-      setFoundFoodTypes(listedFoodTypes);
-      console.log(listedFoodTypes);
-    });
+              setIsSearched(true);
+        setFoundFoodTypes(listedFoodTypes);
+        console.log(listedFoodTypes);
+          });
   };
 
   const handleSelectFoodType = (selectedFoodType) => {
@@ -146,7 +170,7 @@ const CalorieForm = () => {
   return (
     <>
       <Box flex={5} p={{ xs: 0, md: 2, alignItems: "center" }}>
-        {isSearched ? (
+      {isSearched ? (
           <>
             <TextField
               id="outlined-search"
@@ -165,6 +189,7 @@ const CalorieForm = () => {
                 ),
               }}
             />
+            {foundFoodTypes !== undefined ? (
             <Table>
               {foundFoodTypes.length !== 0 ? (
                 <TableHead>
@@ -193,6 +218,10 @@ const CalorieForm = () => {
                 ))}
               </TableBody>
             </Table>
+
+            ) : (
+              <h6>No such food found</h6>
+            )}
           </>
         ) : (
           <>

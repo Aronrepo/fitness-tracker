@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +64,24 @@ public class CalorieService {
         List<Calorie> calories = calorieRepository.findByUserAndMealDateTimeAfter(user, startOfDay);
 
         return calories.stream()
-                .map(calorie -> new CalorieForAnalyticsDTO(calorie.getConsumption(), calorie.getMealDateTime()))
+                .map(calorie -> new CalorieForAnalyticsDTO(calorie.getConsumption() * calorie.getFoodType().getCalories()/100, calorie.getMealDateTime()))
                 .toList();
     }
 
+    public List<CalorieDTO> getDailyCalories(String userEmail) {
+        LocalTime startTime = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
+        LocalDateTime startOfDay = LocalDateTime.of(today, startTime);
+        List<Calorie> calories = calorieRepository.findByUserEmailAndMealDateTimeAfter(userEmail, startOfDay);
+
+        List<CalorieDTO> calorieDTOS = new ArrayList<>();
+        for (Calorie calorie : calories) {
+            double allCalories = calorie.getConsumption() * calorie.getFoodType().getCalories()/ ONE_GRAM;
+            double allCarbohydrate = calorie.getConsumption() * calorie.getFoodType().getCarbohydrate()/ ONE_GRAM;
+            double allProtein = calorie.getConsumption() * calorie.getFoodType().getProtein()/ ONE_GRAM;
+            double allFat = calorie.getConsumption() * calorie.getFoodType().getFat()/ ONE_GRAM;
+            calorieDTOS.add(new CalorieDTO(calorie.getFoodType().getFoodType(), allCalories, allCarbohydrate, allProtein, allFat, calorie.getConsumption(), calorie.getMealDateTime()));
+        }
+        return calorieDTOS;
+    }
 }

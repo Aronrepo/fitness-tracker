@@ -13,4 +13,7 @@ public interface CalorieRepository extends JpaRepository<Calorie, Long> {
     List<Calorie> findByUserEmail(String email);
 
     List<Calorie> findByUserAndMealDateTimeAfter(User user, LocalDateTime localDateTime);
+
+    List<Calorie> findByUserEmailAndMealDateTimeAfter(String userEmail, LocalDateTime localDateTime);
+
 }

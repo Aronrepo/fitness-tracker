@@ -25,6 +25,6 @@ public class AnalyzeController {
     @GetMapping("/")
     public ResponseEntity<List<AnalyticDailyDTO>> getAnalytics(@RequestParam String duration,
                                                                @CurrentSecurityContext(expression = "authentication") Authentication authentication){
-        return new ResponseEntity<>(analyzeService.listAnalyticForPeriod(duration, authentication.getName()), HttpStatus.FOUND);
+        return new ResponseEntity<>(analyzeService.listAnalyticForPeriod(duration, authentication.getName()), HttpStatus.OK);
     }
 }

@@ -29,6 +29,12 @@ public class CalorieController {
         return calorieService.getAllCalories(authentication.getName());
     }
 
+    @GetMapping("/daily")
+    public List<CalorieDTO> getDailyCalories(@CurrentSecurityContext(expression = "authentication")
+                                                 Authentication authentication) {
+        return calorieService.getDailyCalories(authentication.getName());
+    }
+
     @PostMapping("/")
     public ResponseEntity<ReceivedNewCalorieDTO> addNewMeal(
             @RequestBody ReceivedNewCalorieDTO meal,
