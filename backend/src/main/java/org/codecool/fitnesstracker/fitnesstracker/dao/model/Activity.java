@@ -33,7 +33,7 @@ public class Activity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "minutesOfExercise")
+    @JoinColumn(name = "activityType_id")
     private ActivityType activityType;
 
 
