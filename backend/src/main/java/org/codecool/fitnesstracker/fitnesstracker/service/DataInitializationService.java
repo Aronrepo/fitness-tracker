@@ -24,7 +24,7 @@ public class DataInitializationService {
         this.activityTypeRepository = activityTypeRepository;
     }
 
-    public void initDataFromJsonFile(String jsonFilePath) {
+    public void initDataFromJsonFile() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             ClassPathResource resource = new ClassPathResource(JSON_FILE_PATH);
