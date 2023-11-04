@@ -19,21 +19,47 @@ export default function CalorieDailyList() {
     };
 
     const fetchMeals = () => {
-        return fetch('/calories/', requestOptions).then((res) => res.json());
+        return fetch('/calories/daily', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {
         fetchMeals().then((listedMeals) => {
             setListedMeals(listedMeals);
-            console.log(listedMeals);
         });
     }, []);
 
-    const xAxisLabels = listedMeals.map((data) => data.FoodType);
-    const caloriesData = listedMeals.map((data) => data.calorie);
+    const sumCaloriesByFoodType = (data) => {
+        
+        const summedData = {};
+      
+        data.forEach((item) => {
+          const { FoodType, calorie } = item;
+          
+          if (summedData[FoodType]) {
+            summedData[FoodType] += calorie; 
+          } else {
+            summedData[FoodType] = calorie; 
+          }
+        });
+      
+        
+        const summedDataArray = Object.keys(summedData).map((FoodType) => ({
+          FoodType,
+          calorie: summedData[FoodType],
+        }));
+      
+        return summedDataArray;
+      };
+
+    const summedData = sumCaloriesByFoodType(listedMeals);
+    const xAxisLabels = summedData.map((data) => data.FoodType);
+    const caloriesData = summedData.map((data) => data.calorie);
 
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
+            <div className='header-container'>
+                <h5 className='header'>Daily calorie intake</h5>
+            </div>
             <div className='calorie-daily-list-container'>
                 {listedMeals.length > 0 ? (
                     <>
