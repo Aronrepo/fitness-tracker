@@ -19,7 +19,7 @@ export default function CalorieDailyList() {
     };
 
     const fetchMeals = () => {
-        return fetch('/calories/', requestOptions).then((res) => res.json());
+        return fetch('/calories/daily', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {
@@ -57,6 +57,9 @@ export default function CalorieDailyList() {
 
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
+            <div className='header-container'>
+                <h5 className='header'>Daily calorie intake</h5>
+            </div>
             <div className='calorie-daily-list-container'>
                 {listedMeals.length > 0 ? (
                     <>
