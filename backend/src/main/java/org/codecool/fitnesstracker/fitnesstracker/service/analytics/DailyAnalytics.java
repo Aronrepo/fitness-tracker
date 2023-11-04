@@ -33,7 +33,7 @@ public class DailyAnalytics implements AnalyticDuration {
     @Override
     public List<AnalyticDailyDTO> getAnalytics(int userBaseLineCalorieRequirement, User user) {
         double sumDailyCalorie = calorieService.getCalorieFromDate(getStartingDate(), user).stream().mapToDouble(cal -> cal.calorie()).sum();
-        int sumDailyActivity = activityService.getActivityFromDate(getStartingDate(), user).stream().mapToInt(cal -> cal.calorie()).sum();
+        double sumDailyActivity = activityService.getActivityFromDate(getStartingDate(), user).stream().mapToDouble(cal -> cal.calorie()).sum();
         List<AnalyticDailyDTO> analyticDailyDTOS = new ArrayList<>();
 
         analyticDailyDTOS.add(new AnalyticDailyDTO(userBaseLineCalorieRequirement, sumDailyCalorie, sumDailyActivity, LocalDate.now()));
