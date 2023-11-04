@@ -1,10 +1,10 @@
 [
   {
-    "activity_type": "running",
+    "activityType": "running",
     "calories": 11
   },
   {
-    "activity_type": "swimming",
+    "activityType": "swimming",
     "calories": 13
   }
 ]
