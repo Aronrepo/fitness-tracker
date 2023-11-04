@@ -49,7 +49,7 @@ public class ActivityService {
         }
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = userService.findUserByEmail(userEmail);
-        ActivityType activityType = activityTypeRepository.findActivityTypeById(activity.activityId());
+        ActivityType activityType = activityTypeRepository.findActivityTypeById(activity.activityTypeId());
         Activity newActivity = new Activity(activityType, activity.duration(), localDateTime, user);
         activityRepository.save(newActivity);
         System.out.println("Added a new activity!");
