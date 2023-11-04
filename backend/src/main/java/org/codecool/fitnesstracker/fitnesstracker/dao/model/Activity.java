@@ -14,8 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Activity {
 
-    public Activity(ActivityType activityType, LocalDateTime activityDateTime, User user) {
+    public Activity(ActivityType activityType, int minutesOfExercise, LocalDateTime activityDateTime, User user) {
         this.activityType = activityType;
+        this.minutesOfExercise = minutesOfExercise;
         this.activityDateTime = activityDateTime;
         this.user = user;
     }
