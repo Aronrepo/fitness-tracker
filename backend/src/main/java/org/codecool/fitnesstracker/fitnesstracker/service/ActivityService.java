@@ -4,7 +4,10 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityCalorie
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.ActivityType;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.ZeroInputException;
+import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityTypeRepository;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,15 @@ import java.util.List;
 
 @Service
 public class ActivityService {
-    ActivityRepository activityRepository;
+    private final ActivityRepository activityRepository;
+
+    private final ActivityTypeRepository activityTypeRepository;
 
     UserService userService;
     @Autowired
-    public ActivityService(ActivityRepository activityRepository, UserService userService) {
+    public ActivityService(ActivityRepository activityRepository, ActivityTypeRepository activityTypeRepository, UserService userService) {
         this.activityRepository = activityRepository;
+        this.activityTypeRepository = activityTypeRepository;
         this.userService = userService;
     }
 
@@ -32,17 +38,21 @@ public class ActivityService {
         List<Activity> activityList = activityRepository.findByUserEmail(userEmail);
         List<ActivityDTO> activityDTOS = new ArrayList<>();
         for (Activity activity : activityList) {
-            activityDTOS.add(new ActivityDTO(activity.getActivityType(), activity.getCalories(), activity.getActivityDateTime()));
+            activityDTOS.add(new ActivityDTO(activity.getActivityType().getActivityType(), activity.getMinutesOfExercise(), activity.getActivityType().getCalories() * activity.getMinutesOfExercise(), activity.getActivityDateTime()));
         }
         return activityDTOS;
     }
 
     public void addNewActivity(NewActivityDTO activity, String userEmail) {
+        if(activity.duration() <= 0) {
+            throw new ZeroInputException("Input must be a positive integer!");
+        }
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = userService.findUserByEmail(userEmail);
-        ActivityDTO addedActivity = new ActivityDTO(activity.activity(), activity.calories(), localDateTime);
-        Activity newActivity = new Activity(addedActivity.activity(), addedActivity.calories(), localDateTime, user);
+        ActivityType activityType = activityTypeRepository.findActivityTypeById(activity.activityId());
+        Activity newActivity = new Activity(activityType, activity.duration(), localDateTime, user);
         activityRepository.save(newActivity);
+        System.out.println("Added a new activity!");
     }
 
     public List<ActivityCalorieForAnalyticsDTO> getActivityFromDate(LocalDate startingDate, User user) {
@@ -51,7 +61,7 @@ public class ActivityService {
         List<Activity> activities = activityRepository.findByUserAndActivityDateTimeAfter(user, startOfDay);
 
         return activities.stream()
-                .map(activity -> new ActivityCalorieForAnalyticsDTO(activity.getCalories(), activity.getActivityDateTime()))
+                .map(activity -> new ActivityCalorieForAnalyticsDTO(activity.getMinutesOfExercise() * activity.getActivityType().getCalories(), activity.getActivityDateTime()))
                 .toList();
     }
 }
