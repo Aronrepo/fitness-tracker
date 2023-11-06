@@ -30,6 +30,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
     }
 
+    @ExceptionHandler(NoSuchActivityTypeException.class)
+    public ResponseEntity<String> handleNoSuchActivityTypeException(NoSuchActivityTypeException ex) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
+    }
+
     @ExceptionHandler(ZeroInputException.class)
     public ResponseEntity<String> handleZeroInputException(ZeroInputException ex) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getMessage());

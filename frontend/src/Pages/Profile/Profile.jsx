@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 export default function Profile() {
     const [gender, setGender] = useState(0);
     const [weight, setWeight] = useState(0);
-    const [birthDate, setBirthDate] = useState(0);
+    const [birthDate, setBirthDate] = useState('');
     const [height, setHeight] = useState(0);
     const [duration, setDuration] = useState('week');
     const [open, setOpen] = useState(false);
