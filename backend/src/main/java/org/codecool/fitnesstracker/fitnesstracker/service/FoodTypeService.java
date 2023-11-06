@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class FoodTypeService {
     public static final char PERCENTAGE_SYMBOL = '%';
-    FoodTypeRepository foodTypeRepository;
-    SpoonApiService spoonApiService;
+    private final FoodTypeRepository foodTypeRepository;
+    private final SpoonApiService spoonApiService;
 
     @Autowired
     public FoodTypeService(FoodTypeRepository foodTypeRepository, SpoonApiService spoonApiService) {
