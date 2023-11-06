@@ -1,0 +1,36 @@
+version: '3.2'
+
+services:
+  backend:
+    image: arondocker100/fitnesstracker
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    depends_on:
+      - postgresdb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - backend-network
+
+  postgresdb:
+    image: postgres:13.1-alpine
+    container_name: postgresdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+
+volumes:
+  db-data:
