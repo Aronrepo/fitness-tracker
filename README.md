@@ -29,13 +29,13 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 ### Installation
 
-1. Pull the image from Dockerhub in a new directory by using a bash terminal:
+1. Pull the image from Dockerhub by using a bash terminal:
 
    ```sh
    docker pull arondocker100/fitnesstracker
    
 
-2. In the root directory of the repository you will find a compose file called docker-compose-app.yml. Copy this compose file into the new folder
+2. In the root directory of the repository you will find a compose file called docker-compose-app.yml. Copy this compose file into a new folder
     
 
 3. Run the compose file in bash terminal
