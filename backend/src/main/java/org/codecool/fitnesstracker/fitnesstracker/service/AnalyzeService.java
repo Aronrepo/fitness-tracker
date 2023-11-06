@@ -16,9 +16,9 @@ import java.util.*;
 
 @Service
 public class AnalyzeService {
-    ActivityService activityService;
-    CalorieService calorieService;
-    UserService userService;
+    private final ActivityService activityService;
+    private final CalorieService calorieService;
+    private final UserService userService;
 
     Set<AnalyticDuration> durations;
 
