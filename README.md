@@ -29,51 +29,14 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 ### Installation
 
-1. Pull the image from Dockerhub in a new directory:
+1. Pull the image from Dockerhub in a new directory by using a bash terminal:
 
    ```sh
    docker pull arondocker100/fitnesstracker
    
 
-2. Create a new docker compose file and save it with this content:
-
-    ```docker
-    version: '3.2'
-
-    services:
-    backend:
-        image: arondocker100/fitnesstracker
-        ports:
-        - "8080:8080"
-        depends_on:
-        - postgresdb
-        environment:
-        - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
-        - SPRING_DATASOURCE_USERNAME=postgres
-        - SPRING_DATASOURCE_PASSWORD=postgres
-        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-        networks:
-        - backend-network
-
-    postgresdb:
-        image: postgres:13.1-alpine
-        container_name: postgresdb
-        environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DB=postgres
-        volumes:
-        - db-data:/var/lib/postgresql/data
-        ports:
-        - "5432:5432"
-        networks:
-        - backend-network
-
-    networks:
-    backend-network:
-
-    volumes:
-    db-data:
+2. In the root directory of the repository you will find a compose file called docker-compose-app.yml. Copy this compose file into the new folder
+    
 
 3. Run the compose file in bash terminal
 
@@ -83,10 +46,10 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 ### Usage
 1. Register or log in to the application.
-2. Log your activities by providing activity type, calories burned, and date/time.
-3. Log your meals by providing food type, calories consumed, and date/time.
-4. View your daily analytics to track calorie consumption and activity.
-5. Update your user profile with additional information.
+2. Update your user profile with additional information.
+3. Log your activities by providing activity type, calories burned, and date/time.
+4. Log your meals by providing food type, calories consumed, and date/time.
+5. View your daily analytics to track calorie consumption and activity.
 
 ### Contributing
 Contributions are welcome! If you find any issues or want to enhance the application, feel free to submit pull requests.
