@@ -26,7 +26,7 @@ const CalorieForm = () => {
   const [grams, setGrams] = useState(0);
   const [foodType, setFoodType] = useState();
   const [open, setOpen] = useState(false);
-  const [dailybarchart, setDailybarchart] = useState(true);
+  const [flexDirection, setFlexDirection] = useState('row');
   const [searchedFood, setSearchedFood] = useState("");
   const [isSearched, setIsSearched] = useState(true);
   const [foundFoodTypes, setFoundFoodTypes] = useState([]);
@@ -87,9 +87,9 @@ const CalorieForm = () => {
 
   const showDailyBarChart = () => {
     if (window.innerWidth <= 960) {
-      setDailybarchart(false);
+      setFlexDirection('column');
     } else {
-      setDailybarchart(true);
+      setFlexDirection('row');
     }
   };
 
@@ -170,9 +170,16 @@ const CalorieForm = () => {
 
   return (
     <>
-      <Box flex={5} p={{ xs: 0, md: 2, alignItems: "center" }}>
+      <Box flex={5} sx= {{
+         display: 'flex',
+         flexDirection: {flexDirection},
+         p: 1,
+         m: 1,
+         bgcolor: 'background.paper',
+         borderRadius: 1,
+      }} >
       {isSearched ? (
-          <>
+          <Box>
             <TextField
               id="outlined-search"
               label="Search food"
@@ -223,7 +230,7 @@ const CalorieForm = () => {
             ) : (
               <h6>No such food found</h6>
             )}
-          </>
+          </Box>
         ) : (
           <>
             <TextField
@@ -315,8 +322,8 @@ const CalorieForm = () => {
             </form>
           </>
         )}
+        <DailyBarchart todayBalance={dailyCalorieBalanceInfos} />
       </Box>
-      {dailybarchart ? <DailyBarchart todayBalance={dailyCalorieBalanceInfos} /> : null}
     </>
   );
 };
