@@ -30,10 +30,11 @@ const CalorieForm = () => {
   const [searchedFood, setSearchedFood] = useState("");
   const [isSearched, setIsSearched] = useState(true);
   const [foundFoodTypes, setFoundFoodTypes] = useState([]);
-  const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
+  const [dailyCalorieBalanceInfos, setDailyCalorieBalanceInfos] = useState([
     {
       requiedCalorie: 0,
       dailyCalorieConsumption: 0,
+      dailyActivityCalorie: 0
     },
   ]);
   const [duration, setDuration] = useState("daily");
@@ -59,7 +60,7 @@ const CalorieForm = () => {
 
   useEffect(() => {
     fetchDailyCalories().then((listedMeals) => {
-      setDailyCalorieInfos(listedMeals);
+      setDailyCalorieBalanceInfos(listedMeals);
     });
   }, []);
 
@@ -158,7 +159,7 @@ const CalorieForm = () => {
       setOpen(true);
       setSuccessMessage("Posted meal")
       fetchDailyCalories().then((listedMeals) => {
-        setDailyCalorieInfos(listedMeals);
+        setDailyCalorieBalanceInfos(listedMeals);
       });
       const data = await response.json();
       console.log(data);
@@ -315,7 +316,7 @@ const CalorieForm = () => {
           </>
         )}
       </Box>
-      {dailybarchart ? <DailyBarchart listedMeals={dailyCalorieInfos} /> : null}
+      {dailybarchart ? <DailyBarchart todayBalance={dailyCalorieBalanceInfos} /> : null}
     </>
   );
 };
