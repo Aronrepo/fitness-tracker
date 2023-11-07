@@ -3,7 +3,7 @@ package org.codecool.fitnesstracker.fitnesstracker.controller.dto;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public record ActivityDTO(String activity, int activityDuration, double calories, LocalDateTime activityDateTime) {
+public record ActivityDTO(Long id, String activity, int activityDuration, double calories, LocalDateTime activityDateTime) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
