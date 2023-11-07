@@ -4,8 +4,8 @@ import '../../Pages/CalorieDaily/CalorieDailyList.css';
 import { Alert, Box } from '@mui/material';
 import './DailyBarchart.css';
 
-export default function DailyBarchart({ listedMeals }) {
-    if (!listedMeals || listedMeals.length === 0) {
+export default function DailyBarchart({ todayBalance }) {
+    if (!todayBalance || todayBalance.length === 0) {
         return null;
     }
 
@@ -17,17 +17,17 @@ export default function DailyBarchart({ listedMeals }) {
                 
                 series={[
                     {
-                        data: [listedMeals[0]?.requiredCalorie || 0],
+                        data: [todayBalance[0]?.requiredCalorie || 0],
                         stack: 'A',
                         label: 'Opt cals',
                     },
                     {
-                        data: [300],
+                        data: [todayBalance[0]?.dailyActivityCalorie || 0],
                         stack: 'A',
                         label: 'Cals out',
                     },
                     {
-                        data: [listedMeals[0]?.dailyCalorieConsumption || 0],
+                        data: [todayBalance[0]?.dailyCalorieConsumption || 0],
                         label: 'Cals in',
                         color: 'red',
                     },
@@ -36,7 +36,7 @@ export default function DailyBarchart({ listedMeals }) {
                 height={350}
             />
             {
-                listedMeals[0]?.requiredCalorie === 0 ?
+                todayBalance[0]?.requiredCalorie === 0 ?
                 (
                     <Alert sx={{ml: 5}} severity="warning">Please enter user profile information at profile section!</Alert>
                 ) :
