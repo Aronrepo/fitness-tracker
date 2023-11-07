@@ -19,7 +19,7 @@ export default function ActivityDailyList() {
     };
 
     const fetchMeals = () => {
-        return fetch('/activities/', requestOptions).then((res) => res.json());
+        return fetch('/activities/daily', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function ActivityDailyList() {
                     </thead>
                     <tbody>
                         {listedMeals.map((data, index) => (
-                            <tr key={index}>
+                            <tr key={data.id}>
                                 <td>{data.activity}</td>
                                 <td>{data.activityDuration}</td>
                                 <td>{data.calories}</td>
