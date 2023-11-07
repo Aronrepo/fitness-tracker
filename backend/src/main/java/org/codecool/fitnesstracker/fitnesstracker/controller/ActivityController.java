@@ -1,6 +1,7 @@
 package org.codecool.fitnesstracker.fitnesstracker.controller;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class ActivityController {
                                  Authentication authentication) {
         System.out.println(authentication.getName());
         return activityService.getAllActivities(authentication.getName());
+    }
+
+    @GetMapping("/daily")
+    public List<ActivityDTO> getDailyCalories(@CurrentSecurityContext(expression = "authentication")
+                                             Authentication authentication) {
+        return activityService.getDailyActivities(authentication.getName());
     }
 
     @PostMapping("/")

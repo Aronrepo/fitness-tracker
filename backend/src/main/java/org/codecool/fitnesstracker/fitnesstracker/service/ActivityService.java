@@ -2,6 +2,7 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityCalorieForAnalyticsDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityTypeDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.ActivityType;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class ActivityService {
         List<Activity> activityList = activityRepository.findByUserEmail(userEmail);
         List<ActivityDTO> activityDTOS = new ArrayList<>();
         for (Activity activity : activityList) {
-            activityDTOS.add(new ActivityDTO(activity.getActivityType().getActivityType(), activity.getMinutesOfExercise(), activity.getActivityType().getCalories() * activity.getMinutesOfExercise(), activity.getActivityDateTime()));
+            activityDTOS.add(new ActivityDTO(activity.getId(), activity.getActivityType().getActivityType(), activity.getMinutesOfExercise(), activity.getActivityType().getCalories() * activity.getMinutesOfExercise(), activity.getActivityDateTime()));
         }
         return activityDTOS;
     }
@@ -62,6 +64,21 @@ public class ActivityService {
 
         return activities.stream()
                 .map(activity -> new ActivityCalorieForAnalyticsDTO(activity.getMinutesOfExercise() * activity.getActivityType().getCalories(), activity.getActivityDateTime()))
+                .toList();
+    }
+
+    public List<ActivityDTO> getDailyActivities(String userEmail) {
+        LocalTime startTime = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Berlin"));
+        LocalDateTime startOfDay = LocalDateTime.of(today, startTime);
+        List<Activity> activities = activityRepository.findByUserEmailAndActivityDateTimeAfter(userEmail, startOfDay);
+
+        return activities.stream()
+                .map(activity -> new ActivityDTO(activity.getId(),
+                        activity.getActivityType().getActivityType(),
+                        activity.getMinutesOfExercise(),
+                        activity.getMinutesOfExercise() * activity.getActivityType().getCalories(),
+                        activity.getActivityDateTime()))
                 .toList();
     }
 }

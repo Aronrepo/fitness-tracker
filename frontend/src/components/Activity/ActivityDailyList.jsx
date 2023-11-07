@@ -19,7 +19,7 @@ export default function ActivityDailyList() {
     };
 
     const fetchMeals = () => {
-        return fetch('/activities/', requestOptions).then((res) => res.json());
+        return fetch('/activities/daily', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {
@@ -42,19 +42,24 @@ export default function ActivityDailyList() {
 
     return (
         <Box flex={7} p={{ xs: 0, md: 2 }}>
+            <div className='header-container'>
+                <h5 className='header'>Daily calorie intake</h5>
+            </div>
             <div>
                 <table>
                     <thead>
                         <tr>
                             <th>Activity</th>
+                            <th>Duration(min)</th>
                             <th>Calories</th>
                             <th>Date & Time</th>
                         </tr>
                     </thead>
                     <tbody>
                         {listedMeals.map((data, index) => (
-                            <tr key={index}>
+                            <tr key={data.id}>
                                 <td>{data.activity}</td>
+                                <td>{data.activityDuration}</td>
                                 <td>{data.calories}</td>
                                 <td>{formatDateTime(data.activityDateTime)}</td>
                             </tr>

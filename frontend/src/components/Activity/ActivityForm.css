@@ -25,3 +25,9 @@
     background-color: #007BFF;
     color: white;
 }
+
+.header-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

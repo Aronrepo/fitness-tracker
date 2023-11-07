@@ -12,4 +12,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
     List<Activity> findByUserEmail(String userEmail);
 
     List<Activity> findByUserAndActivityDateTimeAfter(User user, LocalDateTime localDateTime);
+
+    List<Activity> findByUserEmailAndActivityDateTimeAfter(String userEmail, LocalDateTime localDateTime);
 }
