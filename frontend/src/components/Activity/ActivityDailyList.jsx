@@ -47,6 +47,7 @@ export default function ActivityDailyList() {
                     <thead>
                         <tr>
                             <th>Activity</th>
+                            <th>Duration(min)</th>
                             <th>Calories</th>
                             <th>Date & Time</th>
                         </tr>
@@ -55,6 +56,7 @@ export default function ActivityDailyList() {
                         {listedMeals.map((data, index) => (
                             <tr key={index}>
                                 <td>{data.activity}</td>
+                                <td>{data.activityDuration}</td>
                                 <td>{data.calories}</td>
                                 <td>{formatDateTime(data.activityDateTime)}</td>
                             </tr>
