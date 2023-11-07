@@ -42,6 +42,9 @@ export default function ActivityDailyList() {
 
     return (
         <Box flex={7} p={{ xs: 0, md: 2 }}>
+            <div className='header-container'>
+                <h5 className='header'>Daily calorie intake</h5>
+            </div>
             <div>
                 <table>
                     <thead>
