@@ -26,7 +26,7 @@ const CalorieForm = () => {
   const [grams, setGrams] = useState(0);
   const [foodType, setFoodType] = useState();
   const [open, setOpen] = useState(false);
-  const [flexDirection, setFlexDirection] = useState('row');
+  const [flexDirection, setFlexDirection] = useState("row");
   const [searchedFood, setSearchedFood] = useState("");
   const [isSearched, setIsSearched] = useState(true);
   const [foundFoodTypes, setFoundFoodTypes] = useState([]);
@@ -34,7 +34,7 @@ const CalorieForm = () => {
     {
       requiedCalorie: 0,
       dailyCalorieConsumption: 0,
-      dailyActivityCalorie: 0
+      dailyActivityCalorie: 0,
     },
   ]);
   const [duration, setDuration] = useState("daily");
@@ -87,9 +87,9 @@ const CalorieForm = () => {
 
   const showDailyBarChart = () => {
     if (window.innerWidth <= 960) {
-      setFlexDirection('column');
+      setFlexDirection("column");
     } else {
-      setFlexDirection('row');
+      setFlexDirection("row");
     }
   };
 
@@ -100,26 +100,26 @@ const CalorieForm = () => {
         Authorization: `Bearer ${jwtToken}`,
       },
     })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Could not fetch the data for that resource");
-      }
-      return res.json();
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Could not fetch the data for that resource");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const handleSearchClick = () => {
     fetchFoodType().then((listedFoodTypes) => {
-              setIsSearched(true);
-        setFoundFoodTypes(listedFoodTypes);
-        console.log(listedFoodTypes);
-          });
+      setIsSearched(true);
+      setFoundFoodTypes(listedFoodTypes);
+      console.log(listedFoodTypes);
+    });
   };
 
   const handleSelectFoodType = (selectedFoodType) => {
@@ -157,7 +157,7 @@ const CalorieForm = () => {
         throw new Error("Failed to post calories.");
       }
       setOpen(true);
-      setSuccessMessage("Posted meal")
+      setSuccessMessage("Posted meal");
       fetchDailyCalories().then((listedMeals) => {
         setDailyCalorieBalanceInfos(listedMeals);
       });
@@ -170,22 +170,24 @@ const CalorieForm = () => {
 
   return (
     <>
-      <Box flex={5} sx= {{
-         display: 'flex',
-         flexDirection: {flexDirection},
-         justifyContent: 'space-between',
-         p: 1,
-         m: 1,
-         bgcolor: 'background.paper',
-         borderRadius: 1,
-      }} >
-      {isSearched ? (
+      <Box
+        flex={5}
+        sx={{
+          display: "flex",
+          flexDirection: { flexDirection },
+          justifyContent: "space-between",
+          p: 1,
+          m: 1,
+          bgcolor: "background.paper",
+          borderRadius: 1,
+        }}
+      >
+        {isSearched ? (
           <Box>
             <TextField
-              
-            sx={{
-              width: "100%",
-            }}
+              sx={{
+                width: "100%",
+              }}
               id="outlined-search"
               label="Search food"
               type="search"
@@ -202,42 +204,40 @@ const CalorieForm = () => {
               }}
             />
             {foundFoodTypes !== undefined ? (
-            <Table
-            sx={{width: "100%"}}>
-              {foundFoodTypes.length !== 0 ? (
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Food Type (100g serving)</TableCell>
-                    <TableCell>Calorie</TableCell>
-                    <TableCell>Carbohydrate</TableCell>
-                    <TableCell>Fat</TableCell>
-                    <TableCell>Protein</TableCell>
-                  </TableRow>
-                </TableHead>
-              ) : null}
-              <TableBody>
-                {foundFoodTypes.map((foodtype) => (
-                  <TableRow
-                    sx={{ cursor: "pointer" }}
-                    key={foodtype.apiId}
-                    onClick={() => handleSelectFoodType(foodtype)}
-                  >
-                    <TableCell>{foodtype.name}</TableCell>
-                    <TableCell>{foodtype.calorie}</TableCell>
-                    <TableCell>{foodtype.carbohydrate}</TableCell>
-                    <TableCell>{foodtype.fat}</TableCell>
-                    <TableCell>{foodtype.protein}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-
+              <Table sx={{ width: "100%" }}>
+                {foundFoodTypes.length !== 0 ? (
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Food Type (100g serving)</TableCell>
+                      <TableCell>Calorie</TableCell>
+                      <TableCell>Carbohydrate</TableCell>
+                      <TableCell>Fat</TableCell>
+                      <TableCell>Protein</TableCell>
+                    </TableRow>
+                  </TableHead>
+                ) : null}
+                <TableBody>
+                  {foundFoodTypes.map((foodtype) => (
+                    <TableRow
+                      sx={{ cursor: "pointer" }}
+                      key={foodtype.apiId}
+                      onClick={() => handleSelectFoodType(foodtype)}
+                    >
+                      <TableCell>{foodtype.name}</TableCell>
+                      <TableCell>{foodtype.calorie}</TableCell>
+                      <TableCell>{foodtype.carbohydrate}</TableCell>
+                      <TableCell>{foodtype.fat}</TableCell>
+                      <TableCell>{foodtype.protein}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             ) : (
               <h6>No such food found</h6>
             )}
           </Box>
         ) : (
-          <>
+          <Box>
             <TextField
               id="outlined-search"
               label="Search food"
@@ -286,9 +286,21 @@ const CalorieForm = () => {
                     series={[
                       {
                         data: [
-                          { id: 0, value: foodType.carbohydrate, label: `Carbs:${foodType.carbohydrate}` },
-                          { id: 1, value: foodType.protein, label: `Protein:${foodType.protein}` },
-                          { id: 2, value: foodType.fat, label: `Fat:${foodType.fat}` },
+                          {
+                            id: 0,
+                            value: foodType.carbohydrate,
+                            label: `Carbs:${foodType.carbohydrate}`,
+                          },
+                          {
+                            id: 1,
+                            value: foodType.protein,
+                            label: `Protein:${foodType.protein}`,
+                          },
+                          {
+                            id: 2,
+                            value: foodType.fat,
+                            label: `Fat:${foodType.fat}`,
+                          },
                         ],
                         outerRadius: 70,
                         cx: 80,
@@ -299,14 +311,14 @@ const CalorieForm = () => {
                     slotProps={{
                       legend: {
                         position: {
-                          vertical: 'middle',
-                          horizontal: 'right',
+                          vertical: "middle",
+                          horizontal: "right",
                         },
                         itemMarkWidth: 20,
                         itemMarkHeight: 2,
                         markGap: 5,
                         itemGap: 10,
-                      }
+                      },
                     }}
                   />
                 </CardContent>
@@ -314,7 +326,7 @@ const CalorieForm = () => {
               <Button
                 variant="contained"
                 type="submit"
-                style={{  minWidth: '345px' }}
+                style={{ minWidth: "345px" }}
               >
                 Post Calories
               </Button>
@@ -325,11 +337,10 @@ const CalorieForm = () => {
                 snackbarError={snackbarError}
               />
             </form>
-          </>
+          </Box>
         )}
         <Box>
-        <DailyBarchart todayBalance={dailyCalorieBalanceInfos} />
-
+          <DailyBarchart todayBalance={dailyCalorieBalanceInfos} />
         </Box>
       </Box>
     </>
