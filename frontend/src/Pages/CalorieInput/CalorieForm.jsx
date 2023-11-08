@@ -173,6 +173,7 @@ const CalorieForm = () => {
       <Box flex={5} sx= {{
          display: 'flex',
          flexDirection: {flexDirection},
+         justifyContent: 'space-between',
          p: 1,
          m: 1,
          bgcolor: 'background.paper',
@@ -181,10 +182,13 @@ const CalorieForm = () => {
       {isSearched ? (
           <Box>
             <TextField
+              
+            sx={{
+              width: "100%",
+            }}
               id="outlined-search"
               label="Search food"
               type="search"
-              fullWidth
               value={searchedFood}
               onChange={(event) => setSearchedFood(event.target.value)}
               InputProps={{
@@ -198,7 +202,8 @@ const CalorieForm = () => {
               }}
             />
             {foundFoodTypes !== undefined ? (
-            <Table>
+            <Table
+            sx={{width: "100%"}}>
               {foundFoodTypes.length !== 0 ? (
                 <TableHead>
                   <TableRow>
@@ -322,7 +327,10 @@ const CalorieForm = () => {
             </form>
           </>
         )}
+        <Box>
         <DailyBarchart todayBalance={dailyCalorieBalanceInfos} />
+
+        </Box>
       </Box>
     </>
   );
