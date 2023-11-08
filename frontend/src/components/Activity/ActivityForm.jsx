@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import "./ActivityForm.css";
@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import Cookies from "js-cookie";
+import DailyBarchart from "../DailyBarchart/DailyBarchart";
 
 const ActivityForm = () => {
   const [duration, setDuration] = useState(0);
@@ -32,6 +33,52 @@ const ActivityForm = () => {
   const [foundActivityTypes, setFoundActivityTypes] = useState([]);
   const [open, setOpen] = React.useState(false);
   const jwtToken = Cookies.get("jwtToken");
+  const [dailyCalorieBalanceInfos, setDailyCalorieBalanceInfos] = useState([
+    {
+      requiedCalorie: 0,
+      dailyCalorieConsumption: 0,
+      dailyActivityCalorie: 0,
+    },
+  ]);
+  const [filterDuration, setFilterDuration] = useState("daily");
+  const [flexDirection, setFlexDirection] = useState("row");
+  const [snackbarError, setSnackbarError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  useEffect(() => {
+    fetchDailyCalories().then((listedMeals) => {
+      setDailyCalorieBalanceInfos(listedMeals);
+    });
+  }, []);
+
+  const fetchDailyCalories = () => {
+    return fetch(`/analyze/?duration=${filterDuration}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Could not fetch the data for that resource");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  const showDailyBarChart = () => {
+    if (window.innerWidth <= 960) {
+      setFlexDirection("column");
+    } else {
+      setFlexDirection("row");
+    }
+  };
 
   //Notify parts
   const handleClick = () => {
@@ -84,7 +131,14 @@ const ActivityForm = () => {
   };
 
   const handleSubmit = async (event) => {
+    setSuccessMessage(null);
+    setSnackbarError(null);
     event.preventDefault();
+    if (duration <= 0) {
+      setOpen(true);
+      setSnackbarError("Amount must be greater than zero");
+      return;
+    }
     try {
       const response = await fetch("/activities/", {
         method: "POST",
@@ -93,15 +147,21 @@ const ActivityForm = () => {
           Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({
-            activityTypeId: activityType.id,
-            duration: duration,
+          activityTypeId: activityType.id,
+          duration: duration,
         }),
       });
 
       if (!response.ok) {
-        console.log(jwtToken);
+        setOpen(true);
+        setSnackbarError("Failed to post calories.");
         throw new Error("Failed to post activity.");
       }
+      setOpen(true);
+      setSuccessMessage("Posted meal");
+      fetchDailyCalories().then((listedMeals) => {
+        setDailyCalorieBalanceInfos(listedMeals);
+      });
 
       const data = await response.json();
       console.log(data);
@@ -112,14 +172,27 @@ const ActivityForm = () => {
 
   return (
     <>
-      <Box flex={9} p={{ xs: 0, md: 2 }}>
+      <Box
+        flex={5}
+        sx={{
+          display: "flex",
+          flexDirection: { flexDirection },
+          justifyContent: "space-between",
+          p: 1,
+          m: 1,
+          bgcolor: "background.paper",
+          borderRadius: 1,
+        }}
+      >
         {isSearched ? (
-          <>
+          <Box>
             <TextField
+              sx={{
+                width: "100%",
+              }}
               id="search-activity"
               label="Search activity"
               type="search"
-              fullWidth
               value={searchedActivity}
               onChange={(event) => setSearchedActivity(event.target.value)}
               InputProps={{
@@ -133,7 +206,7 @@ const ActivityForm = () => {
               }}
             />
             {foundActivityTypes !== undefined ? (
-              <Table>
+              <Table sx={{ width: "100%" }}>
                 {foundActivityTypes.length !== 0 ? (
                   <TableHead>
                     <TableRow>
@@ -158,10 +231,10 @@ const ActivityForm = () => {
             ) : (
               <h6>No such activity found</h6>
             )}
-          </>
+          </Box>
         ) : (
-          <>
-                      <TextField
+          <Box>
+            <TextField
               id="outlined-search"
               label="Search food"
               type="search"
@@ -205,28 +278,33 @@ const ActivityForm = () => {
                     {activityType.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    One minute of {activityType.name} burns {activityType.calorie}{" "}
-                    calories.
+                    One minute of {activityType.name} burns{" "}
+                    {activityType.calorie} calories.
                   </Typography>
                 </CardContent>
               </Card>
               <Button
                 variant="contained"
                 type="submit"
-                className="submit-button"
-                onClick={handleClick}
+                style={{ minWidth: "345px" }}
               >
                 Post Activity
               </Button>
 
               <Notification
-                open={open}
+                snackbarOpen={open}
                 onClose={handleClose}
-                message="Posted an activity"
+                successMassage={successMessage}
+                snackbarError={snackbarError}
               />
             </form>
-          </>
+          </Box>
         )}
+        <Box>
+          <DailyBarchart
+            todayBalance={dailyCalorieBalanceInfos}
+          ></DailyBarchart>
+        </Box>
       </Box>
     </>
   );
