@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Service
 public class DataInitializationService {
-
     private ActivityTypeRepository activityTypeRepository;
-    private static final String JSON_FILE_PATH = "ActivityTypes.json"; // Replace with the actual file name.
+    private static final String JSON_FILE_PATH = "ActivityTypes.json";
 
 
     @Autowired
@@ -25,14 +25,23 @@ public class DataInitializationService {
     }
 
     public void initDataFromJsonFile() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            ClassPathResource resource = new ClassPathResource(JSON_FILE_PATH);
-            File file = resource.getFile();
-            List<ActivityType> activityTypes = objectMapper.readValue(file, new TypeReference<>() {});
-            activityTypeRepository.saveAll(activityTypes);
-        } catch (IOException e) {
+        ClassLoader classLoader = DataInitializationService.class.getClassLoader();
+
+        try (InputStream inputStream = classLoader.getResourceAsStream(JSON_FILE_PATH)) {
+            if (inputStream != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                List<ActivityType> activityTypes = objectMapper.readValue(
+                        inputStream,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, ActivityType.class)
+                );
+                activityTypeRepository.saveAll(activityTypes);
+
+            } else {
+                System.err.println("File not found: " + JSON_FILE_PATH);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }
