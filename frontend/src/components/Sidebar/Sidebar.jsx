@@ -64,7 +64,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton component={LinkRouter} to='/analyze'
+                                <ListItemButton component={LinkRouter} to='/analyzeUser'
                                 >
                                     <ListItemIcon>
                                         <Settings />

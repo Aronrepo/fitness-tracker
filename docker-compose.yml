@@ -2,7 +2,9 @@ version: '3.2'
 
 services:
   backend:
-    image: arondocker100/fitnesstracker
+    build:
+      context: . # Use an image built from the specified dockerfile in the backend directory.
+      dockerfile: Dockerfile
     ports:
       - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     depends_on:
