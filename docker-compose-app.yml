@@ -11,6 +11,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - URL=https://api.spoonacular.com/food/ingredients/
+      - KEYNAME=x-api-key
+      - APIKEY=2b02fc76096448d0b9e79b48643be8a6
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - backend-network
