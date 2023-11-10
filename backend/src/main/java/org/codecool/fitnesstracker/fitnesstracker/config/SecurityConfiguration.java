@@ -30,7 +30,24 @@ public class SecurityConfiguration {
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/api/v1/auth/**")
+                                .requestMatchers("/api/v1/auth/**",
+                                        "/",
+                                        "/calorie",
+                                        "/about",
+                                        "/manifest.json",
+                                        "/favicon.ico",
+                                        "/logo192.png",
+                                        "/logo512.png",
+                                        "http://localhost:3000/static/media/aboutVideo.b4d390a94f17f55db39b.mp4",
+                                        "/static/**",
+                                        "/templates/**",
+                                        "/profile",
+                                        "/yourDailyCalorie",
+                                        "/yourDailyActivity",
+                                        "/analyzeUser",
+                                        "/activity",
+                                        "/index.html"
+                                )
                                 .permitAll()
                                 .requestMatchers(POST,"/activities/").hasAuthority(Authorities.SET_ACTIVITIES.name())
                                 .requestMatchers(GET,"/activities/").hasAuthority(Authorities.GET_ACTIVITIES.name())
