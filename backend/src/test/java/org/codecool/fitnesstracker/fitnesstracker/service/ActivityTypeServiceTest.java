@@ -55,6 +55,8 @@ class ActivityTypeServiceTest {
         assertEquals("Trail Running", result.get(1).name());
         assertEquals(120.0, result.get(1).calorie());
 
+        verify(activityTypeRepository, times(1)).findActivityTypeByActivityTypeIsLikeIgnoreCase(any(String.class));
+
 
     }
 
