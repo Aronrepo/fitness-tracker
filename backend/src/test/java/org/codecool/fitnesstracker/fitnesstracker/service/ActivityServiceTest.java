@@ -59,4 +59,18 @@ class ActivityServiceTest {
 
     }
 
+    @Test
+    void testAddNewActivity() {
+        NewActivityDTO newActivityDTO = new NewActivityDTO(1L, 60);
+        String userEmail = "test@example.com";
+        User user = new User();
+        user.setEmail(userEmail);
+
+        when(userService.findUserByEmail(userEmail)).thenReturn(user);
+        when(activityTypeRepository.findActivityTypeById(1L)).thenReturn(new ActivityType());
+        when(activityRepository.save(new Activity())).thenReturn(new Activity());
+
+        assertDoesNotThrow(() -> activityService.addNewActivity(newActivityDTO, userEmail));
+    }
+
 }
