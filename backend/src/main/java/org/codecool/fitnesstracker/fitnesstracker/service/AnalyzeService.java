@@ -23,12 +23,15 @@ public class AnalyzeService {
     Set<AnalyticDuration> durations;
 
     @Autowired
-    public AnalyzeService(ActivityService activityService, CalorieService calorieService, UserService userService) {
+    public AnalyzeService(ActivityService activityService, CalorieService calorieService, UserService userService, Set<AnalyticDuration> durations) {
         this.activityService = activityService;
         this.calorieService = calorieService;
         this.userService = userService;
-        durations = new HashSet<>();
-        durations.add(new DailyAnalytics(calorieService, activityService));
+        this.durations = durations;
+
+        if (this.durations.isEmpty()) {
+            this.durations.add(new DailyAnalytics(calorieService, activityService));
+        }
     }
 
     public List<AnalyticDailyDTO> listAnalyticForPeriod(String duration, String userEmail){
