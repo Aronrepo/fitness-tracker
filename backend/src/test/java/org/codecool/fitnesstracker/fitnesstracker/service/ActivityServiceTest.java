@@ -4,6 +4,7 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.ActivityType;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.ZeroInputException;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityRepository;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityTypeRepository;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
@@ -71,6 +72,16 @@ class ActivityServiceTest {
         when(activityRepository.save(new Activity())).thenReturn(new Activity());
 
         assertDoesNotThrow(() -> activityService.addNewActivity(newActivityDTO, userEmail));
+    }
+
+    @Test
+    void testAddNewActivityWithZeroDuration() {
+        // Mocking data
+        NewActivityDTO newActivityDTO = new NewActivityDTO(1L, 0);
+        String userEmail = "test@example.com";
+
+        // Calling the method to test and expecting an exception
+        assertThrows(ZeroInputException.class, () -> activityService.addNewActivity(newActivityDTO, userEmail));
     }
 
 }
