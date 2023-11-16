@@ -18,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -91,10 +92,10 @@ class ActivityServiceTest {
 
         LocalDateTime currentDate = LocalDateTime.now();
         List<Activity> mockedActivities = new ArrayList<>();
-        mockedActivities.add(new Activity(new ActivityType(), 30, currentDate.minusDays(1), user));
-        mockedActivities.add(new Activity(new ActivityType(), 45, currentDate.minusDays(2), user));
+        mockedActivities.add(new Activity(new ActivityType(1L, "Running", 100.0, new HashSet<>()), 30, currentDate.minusDays(1), user));
+        mockedActivities.add(new Activity(new ActivityType(2L, "Treadmill", 120.0, new HashSet<>()), 45, currentDate.minusDays(2), user));
 
-        when(activityRepository.findByUserAndActivityDateTimeAfter(user, currentDate.minusDays(2).toLocalDate().atStartOfDay()))
+        when(activityRepository.findByUserAndActivityDateTimeAfter(any(User.class), any(LocalDateTime.class)))
                 .thenReturn(mockedActivities);
 
         List<ActivityCalorieForAnalyticsDTO> result = activityService.getActivityFromDate(currentDate.minusDays(2).toLocalDate(), user);
@@ -102,9 +103,35 @@ class ActivityServiceTest {
         assertEquals(2, result.size());
         assertEquals(30 * mockedActivities.get(0).getActivityType().getCalories(), result.get(0).calorie());
         assertEquals(45 * mockedActivities.get(1).getActivityType().getCalories(), result.get(1).calorie());
+        assertNotEquals(1.0, result.get(0).calorie());
 
         verify(activityRepository, times(1)).findByUserAndActivityDateTimeAfter(any(User.class), any(LocalDateTime.class));
 
     }
+
+    @Test
+    void getDailyActivities_test() {
+        User user = new User();
+        user.setEmail("test@example.com");
+
+        LocalDateTime currentDate = LocalDateTime.now();
+        List<Activity> mockedActivities = new ArrayList<>();
+        mockedActivities.add(new Activity(new ActivityType(1L, "Running", 100.0, new HashSet<>()), 30, currentDate.minusDays(1), user));
+        mockedActivities.add(new Activity(new ActivityType(2L, "Treadmill", 120.0, new HashSet<>()), 45, currentDate.minusDays(1), user));
+
+        when(activityRepository.findByUserEmailAndActivityDateTimeAfter(any(String.class), any(LocalDateTime.class)))
+                .thenReturn(mockedActivities);
+
+        List<ActivityDTO> result = activityService.getDailyActivities("test@test.com");
+
+        assertEquals(2, result.size());
+        assertEquals(30 * mockedActivities.get(0).getActivityType().getCalories(), result.get(0).calories());
+        assertEquals(45 * mockedActivities.get(1).getActivityType().getCalories(), result.get(1).calories());
+        assertNotEquals(1.0, result.get(0).calories());
+
+        verify(activityRepository, times(1)).findByUserEmailAndActivityDateTimeAfter(any(String.class), any(LocalDateTime.class));
+    }
+
+
 
 }
