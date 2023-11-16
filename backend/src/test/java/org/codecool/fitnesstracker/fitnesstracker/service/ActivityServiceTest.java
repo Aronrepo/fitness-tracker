@@ -1,5 +1,6 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityCalorieForAnalyticsDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,12 +78,33 @@ class ActivityServiceTest {
 
     @Test
     void testAddNewActivityWithZeroDuration() {
-        // Mocking data
         NewActivityDTO newActivityDTO = new NewActivityDTO(1L, 0);
         String userEmail = "test@example.com";
 
-        // Calling the method to test and expecting an exception
         assertThrows(ZeroInputException.class, () -> activityService.addNewActivity(newActivityDTO, userEmail));
+    }
+
+    @Test
+    void getActivityFromDate_test() {
+        User user = new User();
+        user.setEmail("test@example.com");
+
+        LocalDateTime currentDate = LocalDateTime.now();
+        List<Activity> mockedActivities = new ArrayList<>();
+        mockedActivities.add(new Activity(new ActivityType(), 30, currentDate.minusDays(1), user));
+        mockedActivities.add(new Activity(new ActivityType(), 45, currentDate.minusDays(2), user));
+
+        when(activityRepository.findByUserAndActivityDateTimeAfter(user, currentDate.minusDays(2).toLocalDate().atStartOfDay()))
+                .thenReturn(mockedActivities);
+
+        List<ActivityCalorieForAnalyticsDTO> result = activityService.getActivityFromDate(currentDate.minusDays(2).toLocalDate(), user);
+
+        assertEquals(2, result.size());
+        assertEquals(30 * mockedActivities.get(0).getActivityType().getCalories(), result.get(0).calorie());
+        assertEquals(45 * mockedActivities.get(1).getActivityType().getCalories(), result.get(1).calorie());
+
+        verify(activityRepository, times(1)).findByUserAndActivityDateTimeAfter(any(User.class), any(LocalDateTime.class));
+
     }
 
 }
