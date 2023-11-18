@@ -107,5 +107,28 @@ class CalorieServiceTest {
 
     @Test
     void getDailyCalories_test() {
+        LocalDateTime currentDate = LocalDateTime.now();
+        List<Calorie> mockedCalories = new ArrayList<>();
+        mockedCalories.add(new Calorie(new FoodType("Pizza", 100.0, 20.0, 70.0, 10.0, 1L), 10, currentDate.minusDays(1), user));
+        mockedCalories.add(new Calorie(new FoodType("IceCream", 150.0, 25.0, 65.0, 10.0, 2L), 20, currentDate.minusDays(2), user));
+
+        when(calorieRepository.findByUserEmailAndMealDateTimeAfter(any(String.class), any(LocalDateTime.class))).thenReturn(mockedCalories);
+
+        List<CalorieDTO> result = calorieService.getDailyCalories(userEmail);
+
+        assertEquals(2, result.size());
+        assertEquals(10, result.get(0).calorie());
+        assertEquals(2, result.get(0).protein());
+        assertEquals(7, result.get(0).carbohydrate());
+        assertEquals(1, result.get(0).fat());
+
+        assertEquals(30, result.get(1).calorie());
+        assertEquals(5, result.get(1).protein());
+        assertEquals(13, result.get(1).carbohydrate());
+        assertEquals(2, result.get(1).fat());
+        assertNotEquals(1, result.get(0).calorie());
+
+        verify(calorieRepository, times(1)).findByUserEmailAndMealDateTimeAfter(any(String.class), any(LocalDateTime.class));
+
     }
 }
