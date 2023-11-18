@@ -1,6 +1,7 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieDTO;
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieForAnalyticsDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ReceivedNewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
@@ -86,6 +87,22 @@ class CalorieServiceTest {
 
     @Test
     void getCalorieFromDate_test() {
+        LocalDateTime currentDate = LocalDateTime.now();
+        List<Calorie> mockedCalories = new ArrayList<>();
+        mockedCalories.add(new Calorie(new FoodType("Pizza", 100.0, 20.0, 70.0, 10.0, 1L), 10, currentDate.minusDays(1), user));
+        mockedCalories.add(new Calorie(new FoodType("IceCream", 150.0, 25.0, 65.0, 10.0, 2L), 20, currentDate.minusDays(2), user));
+
+        when(calorieRepository.findByUserAndMealDateTimeAfter(any(User.class), any(LocalDateTime.class))).thenReturn(mockedCalories);
+
+        List<CalorieForAnalyticsDTO> result = calorieService.getCalorieFromDate(currentDate.minusDays(2).toLocalDate(), user);
+
+        assertEquals(2, result.size());
+        assertEquals(10, result.get(0).calorie());
+        assertEquals(30, result.get(1).calorie());
+        assertNotEquals(1, result.get(0).calorie());
+
+        verify(calorieRepository, times(1)).findByUserAndMealDateTimeAfter(any(User.class), any(LocalDateTime.class));
+
     }
 
     @Test
