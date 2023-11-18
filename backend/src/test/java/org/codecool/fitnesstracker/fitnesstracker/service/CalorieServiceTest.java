@@ -5,6 +5,7 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ReceivedNewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.FoodType;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.ZeroInputException;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.CalorieRepository;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.FoodTypeRepository;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
@@ -74,6 +75,13 @@ class CalorieServiceTest {
         assertDoesNotThrow(() -> calorieService.addNewMeal(newCalorieDTO, userEmail));
 
         verify(calorieRepository, times(1)).save(any(Calorie.class));
+    }
+
+    @Test
+    void testAddNewMealWithZeroConsumption() {
+        ReceivedNewCalorieDTO newCalorieDTO = new ReceivedNewCalorieDTO(1L, 0);
+
+        assertThrows(ZeroInputException.class, () -> calorieService.addNewMeal(newCalorieDTO, userEmail));
     }
 
     @Test
