@@ -2,20 +2,18 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.ActivityType;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityTypeRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.FileNotFoundException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class DataInitializationServiceTest {
     @Mock
@@ -23,24 +21,23 @@ public class DataInitializationServiceTest {
 
     @Captor
     ArgumentCaptor<List<ActivityType>> activityCaptor;
-    @Captor
-    ArgumentCaptor<String> fileInputCaptor;
-
 
 
     private DataInitializationService dataInitializationService;
 
     private String inputFile;
 
-    @BeforeEach
-    void setUp() {
-        dataInitializationService = new DataInitializationService(activityTypeRepository);
-
-    }
+//    @BeforeEach
+//    void setUp() {
+//        dataInitializationService = new DataInitializationService(activityTypeRepository, inputFile);
+//
+//    }
 
     @Test
     void initDataFromJsonFile_Success() throws IOException {
-        dataInitializationService.initDataFromJsonFile("ActivityTypes.json");
+        inputFile = "ActivityTypes.json";
+        dataInitializationService = new DataInitializationService(activityTypeRepository, inputFile);
+        dataInitializationService.initDataFromJsonFile();
 
         Mockito.verify(activityTypeRepository, Mockito.times(1)).saveAll(activityCaptor.capture());
         List<ActivityType> value = activityCaptor.getValue();
@@ -50,13 +47,6 @@ public class DataInitializationServiceTest {
         assertEquals(2, value.size());
 
         Assertions.assertIterableEquals(expectedList, value);
-    }
-
-    @Test
-    void initDataFromJsonFile_withCorrectFile() {
-        String expectedFile = "ActivityTypes.json";
-        dataInitializationService.initDataFromJsonFile(expectedFile);
-
 
     }
 
@@ -64,14 +54,18 @@ public class DataInitializationServiceTest {
     @Test
     void initDataFromJsonFile_FileNotFound() {
 
-        // Arrange
-        ClassLoader mockClassLoader = Mockito.mock(ClassLoader.class);
-        given(mockClassLoader.getResourceAsStream(eq("ActivityTypes.json"))).willThrow(new FileNotFoundException());
+        inputFile = "at.json";
+        dataInitializationService = new DataInitializationService(activityTypeRepository, inputFile);
 
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream originalErr = System.err;
+        System.setErr(printStream);
+        dataInitializationService.initDataFromJsonFile();
+        System.setErr(originalErr);
+        String capturedOutput = outputStream.toString();
 
-        // Act and Assert
-        // Use assertThrows to verify that the method throws the expected exception
-        //assertThrows(FileNotFoundException.class, () -> dataInitializationService.initDataFromJsonFile());
+        assertTrue(capturedOutput.contains("File not found: " + inputFile));
 
     }
 }
