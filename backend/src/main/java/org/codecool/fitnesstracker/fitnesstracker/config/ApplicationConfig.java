@@ -1,7 +1,11 @@
 package org.codecool.fitnesstracker.fitnesstracker.config;
 
+import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityTypeRepository;
+import org.codecool.fitnesstracker.fitnesstracker.service.DataInitializationService;
 import org.codecool.fitnesstracker.fitnesstracker.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +24,12 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 
 public class ApplicationConfig {//userpasswordauthfilter
+    @Value("${filePath}")
+    private String filePath;
+
+    @Autowired
+    private ActivityTypeRepository activityTypeRepository;
+
     private final UserRepository repository;
 
     @Bean
@@ -50,5 +60,10 @@ public class ApplicationConfig {//userpasswordauthfilter
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public DataInitializationService dataInitializationService() {
+        return new DataInitializationService(activityTypeRepository, filePath);
     }
 }
