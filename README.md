@@ -51,6 +51,17 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 4. Log your meals by providing food type, calories consumed, and date/time.
 5. View your daily analytics to track calorie consumption and activity.
 
+### Tests
+
+Services has 58% code coverage.  
+Classes which have been tested so far:
+- DailyAnalytics
+- ActivityService
+- ActivityTypeService
+- AnalyzeService
+- CalorieService
+- DataInitializationService
+
 ### Contributing
 Contributions are welcome! If you find any issues or want to enhance the application, feel free to submit pull requests.
 
