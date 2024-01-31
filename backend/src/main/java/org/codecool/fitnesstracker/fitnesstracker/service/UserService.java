@@ -35,9 +35,6 @@ public class UserService {
 
     List<UserDTO> users = new ArrayList<>();
 
-    public List<UserDTO> getAllUsers() {
-        return users;
-    }
 
     public UserInfoDTO getUserInfo(String userEmail) {
         Optional<User> optionalUser = userRepository.findByEmail(userEmail);
