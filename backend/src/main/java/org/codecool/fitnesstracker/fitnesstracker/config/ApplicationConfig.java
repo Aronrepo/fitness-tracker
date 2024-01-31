@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @RequiredArgsConstructor
 
-public class ApplicationConfig {//userpasswordauthfilter
+public class ApplicationConfig {
     @Value("${filePath}")
     private String filePath;
 
@@ -35,7 +34,6 @@ public class ApplicationConfig {//userpasswordauthfilter
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        // átmappelni a user objectre
 
     }
 
