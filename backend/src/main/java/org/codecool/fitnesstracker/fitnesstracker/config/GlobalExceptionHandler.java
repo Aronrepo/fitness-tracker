@@ -1,7 +1,6 @@
 package org.codecool.fitnesstracker.fitnesstracker.config;
 
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.*;
-import org.codecool.fitnesstracker.fitnesstracker.user.User;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

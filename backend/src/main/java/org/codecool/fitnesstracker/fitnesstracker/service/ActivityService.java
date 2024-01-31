@@ -2,11 +2,9 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityCalorieForAnalyticsDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
-import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityTypeDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.ActivityType;
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.ZeroInputException;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityTypeRepository;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;

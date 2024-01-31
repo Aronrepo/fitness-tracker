@@ -1,6 +1,5 @@
 package org.codecool.fitnesstracker.fitnesstracker.eventlistener;
 
-import lombok.RequiredArgsConstructor;
 import org.codecool.fitnesstracker.fitnesstracker.service.DataInitializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
