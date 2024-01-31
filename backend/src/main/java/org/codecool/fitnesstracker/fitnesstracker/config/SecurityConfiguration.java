@@ -1,6 +1,5 @@
 package org.codecool.fitnesstracker.fitnesstracker.config;
 
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.codecool.fitnesstracker.fitnesstracker.user.Authorities;
 import org.springframework.context.annotation.Bean;
