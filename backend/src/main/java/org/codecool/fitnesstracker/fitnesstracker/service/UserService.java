@@ -34,10 +34,6 @@ public class UserService {
     }
 
     List<UserDTO> users = new ArrayList<>();
-//    @Value("${jwt.secret}")
-//    private String jwtSecret;
-//    @Value("${jwt.expiration}")
-//    private int jwtExpiration;
 
     public List<UserDTO> getAllUsers() {
         return users;
