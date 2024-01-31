@@ -1,7 +1,6 @@
 package org.codecool.fitnesstracker.fitnesstracker.controller;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieDTO;
-import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ReceivedNewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.service.CalorieService;
 import org.springframework.beans.factory.annotation.Autowired;

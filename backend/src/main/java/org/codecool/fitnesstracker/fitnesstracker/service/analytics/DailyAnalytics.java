@@ -4,7 +4,6 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.AnalyticDailyDT
 import org.codecool.fitnesstracker.fitnesstracker.service.ActivityService;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.codecool.fitnesstracker.fitnesstracker.service.CalorieService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ import java.util.List;
 public class DailyAnalytics implements AnalyticDuration {
 
     private static final String DURATION = "daily";
-    CalorieService calorieService;
-    ActivityService activityService;
+    private CalorieService calorieService;
+    private ActivityService activityService;
     public DailyAnalytics(CalorieService calorieService, ActivityService activityService) {
         this.calorieService = calorieService;
         this.activityService = activityService;

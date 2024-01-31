@@ -1,11 +1,8 @@
 package org.codecool.fitnesstracker.fitnesstracker.user;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import static org.codecool.fitnesstracker.fitnesstracker.user.Authorities.*;
 

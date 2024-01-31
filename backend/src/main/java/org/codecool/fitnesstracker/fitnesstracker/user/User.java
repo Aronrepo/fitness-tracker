@@ -1,6 +1,5 @@
 package org.codecool.fitnesstracker.fitnesstracker.user;
 
-import org.codecool.fitnesstracker.fitnesstracker.user.Role;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
