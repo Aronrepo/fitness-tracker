@@ -23,11 +23,23 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 - Analytics: Provides daily calorie consumption and activity analytics for users.
 - User Profile: Users can view and update their profile information.
 
+## Technologies
+
+[![Java][Java]][Java-url]
+[![Spring][Spring]][Spring-url]
+[![Postgres][Postgres]][Postgres-url]
+[![Javascript][Javascript]][Javascript-url]
+[![React][React.js]][React-url]
+[![React Router][React Router]][React Router-url]
+[![MUI][MUI]][MUI-url]
+
 ## Getting Started
 
 ### Prerequisites
 
-- Docker
+✅ Docker Desktop installed on your system. [![Docker][Docker]][Docker-url]
+
+✅ Git installed on your system. [![Git][Git]][Git-url]
 
 ### Installation
 
@@ -98,3 +110,14 @@ This project is licensed under the [MIT License](LICENSE).
 [apikey]: /apikey.jpg
 [password]: /password.jpg
 [home page]: /home_page.jpg
+
+<!-- Badge links -->
+[Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
+[Spring]: https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white
+[Postgres]: https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white
+[JavaScript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React Router]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
+[MUI]: https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white
+[Docker]: https://img.shields.io/badge/docker-%230db7ed.svg?style=plastic&logo=docker&logoColor=white
+[Git]: https://img.shields.io/badge/git-%23F05033.svg?style=plastic&logo=git&logoColor=white
