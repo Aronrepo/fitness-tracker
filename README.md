@@ -2,12 +2,14 @@
 
 The Fitness Tracker Application is a web-based platform that allows users to track their daily activities and food consumption. Users can log in, record their activities, and keep track of the calories burned and consumed. This README provides an overview of the application's features, how to set it up, and its usage.
 
+![home page][home page]
+
 ## Table of Contents
 
 - [Features](#features)
 - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -33,7 +35,9 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
    ```sh
    docker pull arondocker100/fitnesstracker
-   
+
+
+   ```
 
 2. In the root directory of the repository you will find a compose file called docker-compose-app.yml. Copy this compose file into a new folder
 
@@ -43,15 +47,20 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 5. Update the env file with your api key (replace xxx)
 
+![env][apikey]
+
 6. Update SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD and SPRING_DATABASE with an arbitrary name (replace xxx)
+
+![password][password]
 
 7. Run the compose file in bash terminal
 
-    ```sh
-    docker-compose -f docker-compose-app.yml up
-
+   ```sh
+   docker-compose -f docker-compose-app.yml up
+   ```
 
 ### Usage
+
 1. Load web application with http://localhost:8080/
 2. Register or log in to the application.
 3. Update your user profile with additional information.
@@ -63,6 +72,7 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 Services has 58% code coverage.  
 Classes which have been tested so far:
+
 - DailyAnalytics
 - ActivityService
 - ActivityTypeService
@@ -71,6 +81,7 @@ Classes which have been tested so far:
 - DataInitializationService
 
 ### Contributing
+
 Contributions are welcome! If you find any issues or want to enhance the application, feel free to submit pull requests.
 
 1. Fork the repository.
@@ -82,3 +93,8 @@ Contributions are welcome! If you find any issues or want to enhance the applica
 ### License
 
 This project is licensed under the [MIT License](LICENSE).
+
+
+[apikey]: /apikey.jpg
+[password]: /password.jpg
+[home page]: /home_page.jpg
