@@ -36,20 +36,28 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
    
 
 2. In the root directory of the repository you will find a compose file called docker-compose-app.yml. Copy this compose file into a new folder
-    
 
-3. Run the compose file in bash terminal
+3. Copy the .env file to the new directory as well
+
+4. Register Spoonacular to get your own api key: https://spoonacular.com/food-api/console#Dashboard
+
+5. Update the env file with your api key (replace xxx)
+
+6. Update SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD and SPRING_DATABASE with an arbitrary name (replace xxx)
+
+7. Run the compose file in bash terminal
 
     ```sh
     docker-compose -f docker-compose-app.yml up
 
 
 ### Usage
-1. Register or log in to the application.
-2. Update your user profile with additional information.
-3. Log your activities by providing activity type, calories burned, and date/time.
-4. Log your meals by providing food type, calories consumed, and date/time.
-5. View your daily analytics to track calorie consumption and activity.
+1. Load web application with http://localhost:8080/
+2. Register or log in to the application.
+3. Update your user profile with additional information.
+4. Log your activities by providing activity type, calories burned, and date/time.
+5. Log your meals by providing food type, calories consumed, and date/time.
+6. View your daily analytics to track calorie consumption and activity.
 
 ### Tests
 
