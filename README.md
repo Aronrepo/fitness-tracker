@@ -41,9 +41,9 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 4. Register Spoonacular to get your own api key: https://spoonacular.com/food-api/console#Dashboard
 
-5. Update the env file with your api key
+5. Update the env file with your api key (replace xxx)
 
-6. Update SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME and SPRING_DATASOURCE_PASSWORD with an arbitrary name
+6. Update SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD and SPRING_DATABASE with an arbitrary name (replace xxx)
 
 7. Run the compose file in bash terminal
 
@@ -52,11 +52,12 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 
 ### Usage
-1. Register or log in to the application.
-2. Update your user profile with additional information.
-3. Log your activities by providing activity type, calories burned, and date/time.
-4. Log your meals by providing food type, calories consumed, and date/time.
-5. View your daily analytics to track calorie consumption and activity.
+1. Load web application with http://localhost:8080/
+2. Register or log in to the application.
+3. Update your user profile with additional information.
+4. Log your activities by providing activity type, calories burned, and date/time.
+5. Log your meals by providing food type, calories consumed, and date/time.
+6. View your daily analytics to track calorie consumption and activity.
 
 ### Tests
 
