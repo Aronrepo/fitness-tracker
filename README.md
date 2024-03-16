@@ -22,6 +22,9 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 - Food Consumption Tracking: Users can record meals with the number of calories consumed.
 - Analytics: Provides daily calorie consumption and activity analytics for users.
 - User Profile: Users can view and update their profile information.
+- 3rd Party Calorie Database  
+![spoonacular][spoonacular]
+
 
 ## Technologies
 
@@ -32,6 +35,7 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 [![React][React.js]][React-url]
 [![React Router][React Router]][React Router-url]
 [![MUI][MUI]][MUI-url]
+[![Bootstrap][Bootstrap]][Bootstrap-url]
 
 ## Getting Started
 
@@ -106,12 +110,15 @@ Contributions are welcome! If you find any issues or want to enhance the applica
 
 This project is licensed under the [MIT License](LICENSE).
 
+<!-- Image references -->
 
-[apikey]: /apikey.jpg
-[password]: /password.jpg
-[home page]: /home_page.jpg
+[apikey]: /contrib/apikey.jpg
+[password]: /contrib/password.jpg
+[home page]: /contrib/home_page.jpg
+[spoonacular]: /contrib/spoonacular.jpg
 
 <!-- Badge links -->
+
 [Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
 [Spring]: https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white
 [Postgres]: https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white
@@ -121,3 +128,17 @@ This project is licensed under the [MIT License](LICENSE).
 [MUI]: https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white
 [Docker]: https://img.shields.io/badge/docker-%230db7ed.svg?style=plastic&logo=docker&logoColor=white
 [Git]: https://img.shields.io/badge/git-%23F05033.svg?style=plastic&logo=git&logoColor=white
+[Bootstrap]: https://img.shields.io/badge/Bootstrap-7431fa?style=for-the-badge&logo=bootstrap&logoColor=white 
+
+
+<!-- Project url -->
+[Java-url]: https://docs.oracle.com/en/java/javase/17/ 
+[Spring-url]: https://spring.io/
+[Postgres-url]: https://www.postgresql.org/
+[JavaScript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[React-url]: https://reactjs.org/
+[React Router-url]: https://reactrouter.com/en/main 
+[MUI-url]: https://mui.com/
+[Docker-url]: https://docs.docker.com/get-docker/
+[Git-url]: https://git-scm.com/downloads
+[Bootstrap-url]: https://getbootstrap.com/
